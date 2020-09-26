@@ -7,10 +7,11 @@
 #server once you've ssh into your Rpi should be as simple as a click or a few strokes of the keyboard. As you
 #know, you won't easily have access to Rpi Desktop to run this program, but you don't need it. This script
 #does the job for you: navigating to the proper directory and running SocketWhisper for you. You'll want to
-#run this script from the root directory.
+#run this from the scripts directory.
 #
 #Author: Wali Morris<walimmorris@gmail.com>
 #Date  : 09/26/2020
+##############################################################################################################
 
 if cd ..; then                                 # Navigate to SocketWhisper
   echo "Moving to Server"
