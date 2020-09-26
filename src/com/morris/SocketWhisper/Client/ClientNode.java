@@ -13,7 +13,7 @@ public class ClientNode {
     private final Socket client;
 
     public ClientNode() throws IOException {
-        String serverName = "tuvok2";
+        String serverName = "10.0.0.13";
         int serverPort = 6066;
         client = new Socket(serverName, serverPort);
     }
