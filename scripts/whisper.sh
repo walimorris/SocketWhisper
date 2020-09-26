@@ -14,7 +14,7 @@
 ##############################################################################################################
 
 if cd ..; then                                 # Navigate to SocketWhisper
-  echo "Moving to Server"
+  echo "Starting SocketWhisper"
 else
   echo "Backtrack: Fail"                       # Handles failure to backtrack
 fi
