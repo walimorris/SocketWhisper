@@ -3,6 +3,7 @@ package com.morris.SocketWhisper.RpiServer;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,7 +19,12 @@ public class RpiServer extends Thread {
     public void run() {
         while (true) {
             try {
+                String localIP = InetAddress.getLocalHost().getHostAddress();
+                String hostName = InetAddress.getLocalHost().getCanonicalHostName();
                 System.out.println("Waiting for client to connect on port: " + rpiServer.getLocalPort() + "...");
+                System.out.println("Host Inet Address: " + localIP);
+                System.out.println("Host Name: " + hostName);
+                System.out.println("Socket Address: " + rpiServer.getLocalSocketAddress());
                 Socket socket = rpiServer.accept();
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 String message = in.readUTF();
@@ -30,19 +36,14 @@ public class RpiServer extends Thread {
                 }
                 System.out.println("Shutting down Raspberry Pi Server");
                 System.out.println("Goodbye!");
-                close(rpiServer, in, out, socket);
+                rpiServer.close();
+                socket.close();
+                out.close();
+                in.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void close(ServerSocket rpiServer, DataInputStream in,
-                      DataOutputStream out, Socket socket) throws IOException {
-        in.close();
-        out.close();
-        socket.close();
-        rpiServer.close();
     }
 }
 
