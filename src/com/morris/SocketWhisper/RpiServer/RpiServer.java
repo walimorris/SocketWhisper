@@ -34,11 +34,10 @@ public class RpiServer extends Thread {
                 message = in.readUTF();
                 if ( message.equalsIgnoreCase("exit") ) {
                     System.out.println("Destroying Socket connected to: " + socket.getRemoteSocketAddress());
-                    rpiServer.close();
                     socket.close();
                     out.close();
                     in.close();
-                    break;
+                    run();
                 }
             }
         } catch (IOException e) {

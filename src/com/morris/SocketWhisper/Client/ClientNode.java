@@ -30,7 +30,7 @@ public class ClientNode {
 
             while (true) {
                 System.out.print("whisper: ");
-                String whisper = userInput.next();
+                String whisper = userInput.nextLine();
 
                 if (whisper.equals("exit")) {
                     client.close();
