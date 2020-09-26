@@ -33,8 +33,7 @@ public class RpiServer extends Thread {
                 out.writeUTF("Whisper heard: " + message);
                 message = in.readUTF();
                 if ( message.equalsIgnoreCase("exit") ) {
-                    System.out.println("Shutting down Raspberry Pi Server");
-                    System.out.println("Goodbye!");
+                    System.out.println("Destroying Socket connected to: " + socket.getRemoteSocketAddress());
                     rpiServer.close();
                     socket.close();
                     out.close();

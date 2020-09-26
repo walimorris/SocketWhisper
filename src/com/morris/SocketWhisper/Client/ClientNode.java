@@ -33,6 +33,8 @@ public class ClientNode {
                 String whisper = userInput.next();
 
                 if (whisper.equals("exit")) {
+                    client.close();
+                    System.out.println("Client shutting down...");
                     System.exit(0);
                 }
 
@@ -40,7 +42,6 @@ public class ClientNode {
                 InputStream serverToClient = client.getInputStream();
                 DataInputStream serverIn = new DataInputStream(serverToClient);
                 System.out.println("Server says: " + serverIn.readUTF());
-                client.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
