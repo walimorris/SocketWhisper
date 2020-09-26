@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class RpiServer extends Thread {
     private ServerSocket rpiServer;
@@ -12,6 +13,7 @@ public class RpiServer extends Thread {
 
     public RpiServer(int port) throws IOException {
         rpiServer = new ServerSocket(port);
+        rpiServer.setSoTimeout(10000);
     }
 
     public void run() {
