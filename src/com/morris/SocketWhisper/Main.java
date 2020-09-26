@@ -1,5 +1,6 @@
 package com.morris.SocketWhisper;
 
+import com.morris.SocketWhisper.Client.ClientNode;
 import com.morris.SocketWhisper.RpiServer.RpiServer;
 import java.io.IOException;
 import java.util.Scanner;
@@ -15,6 +16,8 @@ public class Main {
         /* user choose server, attempt to start Rpi Server */
         if ( nodeType.equals("s") || nodeType.equals("s".toUpperCase()) ) {
             startRpiServer(input);
+        } else {
+            startClient();
         }
     }
 
@@ -44,6 +47,11 @@ public class Main {
         int port = input.nextInt();
         Thread thread = new RpiServer(port);
         thread.start();
+    }
+
+    public static void startClient() throws IOException {
+        ClientNode client = new ClientNode();
+        client.run();
     }
 }
 
