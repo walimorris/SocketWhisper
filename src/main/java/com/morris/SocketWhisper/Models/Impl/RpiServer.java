@@ -133,7 +133,7 @@ public class RpiServer extends Thread implements Server  {
 
     /**
      * Client requests a weather report for a certain city. Server fetches and executes a new
-     * WeatherRequest.
+     * WeatherRequest see {@link WeatherRequest}.
      *
      * @param clientSocket client {@link Socket}
      * @throws IOException some error occurs.
