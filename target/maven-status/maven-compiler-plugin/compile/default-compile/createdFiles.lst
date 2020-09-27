@@ -1,0 +1,4 @@
+com/morris/SocketWhisper/Client/ClientNode.class
+com/morris/SocketWhisper/RpiServer/RpiServer.class
+com/morris/SocketWhisper/Requests/WeatherRequest.class
+com/morris/SocketWhisper/Main.class
