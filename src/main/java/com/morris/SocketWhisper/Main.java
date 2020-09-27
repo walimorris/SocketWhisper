@@ -1,7 +1,7 @@
 package com.morris.SocketWhisper;
 
-import com.morris.SocketWhisper.Client.ClientNode;
-import com.morris.SocketWhisper.RpiServer.RpiServer;
+import com.morris.SocketWhisper.Models.Impl.ClientNode;
+import com.morris.SocketWhisper.Models.Impl.RpiServer;
 import java.io.IOException;
 import java.util.Scanner;
 

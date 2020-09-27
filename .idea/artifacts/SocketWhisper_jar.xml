@@ -5,8 +5,8 @@
       <element id="archive" name="SocketWhisper.jar">
         <element id="module-output" name="SocketWhisper" />
       </element>
-      <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.7.5" />
       <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
+      <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.7.5" />
     </root>
   </artifact>
 </component>
