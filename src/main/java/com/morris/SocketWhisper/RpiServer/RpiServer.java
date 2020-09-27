@@ -34,15 +34,7 @@ public class RpiServer extends Thread {
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 out.writeUTF("Whisper heard: " + message);
                 message = in.readUTF();
-                if ( message.equalsIgnoreCase("exit") ) {
-                    System.out.println("Destroying Socket connected to: " + socket.getRemoteSocketAddress());
-                    socket.close();
-                    out.close();
-                    in.close();
-                    run();
-                }
-                // client wants weather in this city
-                else if ( message.equals("weather") ) {
+                if ( message.equals("weather") ) {
                     out.writeUTF("[Whisper heard] which city: ");
                     message = in.readUTF(); // message should be a city at this point from client
                     /* at this point a request to the whether api should be made */
