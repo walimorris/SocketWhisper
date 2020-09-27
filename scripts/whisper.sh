@@ -18,9 +18,9 @@ if cd ..; then                                 # Navigate to SocketWhisper
 else
   echo "Backtrack: Fail"                       # Handles failure to backtrack
 fi
-if cd target/classes/; then                    # Navigates to Socket Whisper in production directory
+if cd out/artifacts/SocketWhisper_jar; then    # Navigates to Socket Whisper jar file
   echo "Navigation: OK"
 else
   echo "Navigation: Fail"
 fi
-java com.morris.SocketWhisper.Main;            # Runs SocketWhisper
+java -jar SocketWhisper.jar;                   # Runs SocketWhisper

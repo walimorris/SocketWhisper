@@ -38,8 +38,7 @@ public class RpiServer extends Thread {
                     message = in.readUTF(); // message should be a city at this point from client
                     /* at this point a request to the whether api should be made */
                     WeatherRequest weatherRequest = new WeatherRequest(message);
-                    out.writeUTF("Here's your whisper for city " + message);
-                    out.writeUTF(weatherRequest.getResponse().message());
+                    out.writeUTF(weatherRequest.getResponse().toString());
                     message = in.readUTF(); // ensures rpiserver continues to wait for next message from client
                 }
             }
