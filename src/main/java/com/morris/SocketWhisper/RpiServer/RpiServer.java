@@ -1,5 +1,7 @@
 package com.morris.SocketWhisper.RpiServer;
 
+import com.morris.SocketWhisper.Requests.WeatherRequest;
+
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -38,6 +40,16 @@ public class RpiServer extends Thread {
                     out.close();
                     in.close();
                     run();
+                }
+                // client wants weather in this city
+                else if ( message.equals("weather") ) {
+                    out.writeUTF("[Whisper heard] which city: ");
+                    message = in.readUTF(); // message should be a city at this point from client
+                    /* at this point a request to the whether api should be made */
+                    WeatherRequest weatherRequest = new WeatherRequest(message);
+                    out.writeUTF("Here's your whisper for city " + message);
+                    out.writeUTF(weatherRequest.getResponse().message());
+                    message = in.readUTF(); // ensures rpiserver continues to wait for next message from client
                 }
             }
         } catch (IOException e) {

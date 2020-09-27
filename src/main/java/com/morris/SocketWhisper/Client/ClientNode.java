@@ -41,7 +41,7 @@ public class ClientNode {
                 clientOut.writeUTF(whisper);
                 InputStream serverToClient = client.getInputStream();
                 DataInputStream serverIn = new DataInputStream(serverToClient);
-                System.out.println("Server says: " + serverIn.readUTF());
+                System.out.println(serverIn.readUTF());
             }
         } catch (IOException e) {
             e.printStackTrace();
