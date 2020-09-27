@@ -22,8 +22,8 @@ public class WeatherRequest {
         response = client.newCall(request).execute();
     }
 
-    public Response getResponse() {
-        return this.response;
+    public String getResponse() throws IOException {
+        return this.response.body().string();
     }
 }
 
