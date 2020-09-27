@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact name="SocketWhisper:jar">
+  <artifact build-on-make="true" name="SocketWhisper:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/SocketWhisper_jar</output-path>
     <root id="root">
       <element id="archive" name="SocketWhisper.jar">
@@ -8,6 +8,8 @@
         </element>
         <element id="module-output" name="SocketWhisper" />
       </element>
+      <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.7.5" />
+      <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
     </root>
   </artifact>
 </component>
