@@ -1,7 +1,6 @@
 package com.morris.SocketWhisper.RpiServer;
 
 import com.morris.SocketWhisper.Requests.WeatherRequest;
-
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
