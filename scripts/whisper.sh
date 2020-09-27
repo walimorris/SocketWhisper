@@ -18,7 +18,7 @@ if cd ..; then                                 # Navigate to SocketWhisper
 else
   echo "Backtrack: Fail"                       # Handles failure to backtrack
 fi
-if cd target/classes/; then       # Navigates to Socket Whisper in production directory
+if cd target/classes/; then                    # Navigates to Socket Whisper in production directory
   echo "Navigation: OK"
 else
   echo "Navigation: Fail"
