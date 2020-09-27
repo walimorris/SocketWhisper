@@ -16,7 +16,7 @@ public class WeatherRequest {
                         "link%252C%20accurate&units=imperial%252C%20metric&q=" + city)
                 .get()
                 .addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "e795adca4amsh2246a4f000734f5p1417c2jsn0f5a7833c8bb")
+                .addHeader("x-rapidapi-key", 123456ABCDEFG);
                 .build();
 
         response = client.newCall(request).execute();
