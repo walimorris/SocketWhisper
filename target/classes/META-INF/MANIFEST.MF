@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: com.morris.SocketWhisper.Main
+Class-Path: okhttp-2.7.5.jar okio-1.6.0.jar
 
