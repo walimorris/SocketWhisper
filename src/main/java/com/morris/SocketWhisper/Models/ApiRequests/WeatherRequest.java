@@ -24,7 +24,7 @@ public class WeatherRequest implements BasicRequest {
      */
     public WeatherRequest(String city) throws IOException {
         OkHttpClient client = new OkHttpClient();
-        Request request = new com.squareup.okhttp.Request.Builder()
+        Request request = new Request.Builder()
                 .url("https://community-open-weather-map.p.rapidapi.com/find?type=" +
                         "link%252C%20accurate&units=imperial%252C%20metric&q=" + city)
                 .get()
