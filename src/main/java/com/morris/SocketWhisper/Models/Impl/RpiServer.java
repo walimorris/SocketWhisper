@@ -1,7 +1,7 @@
 package com.morris.SocketWhisper.Models.Impl;
 
 import com.morris.SocketWhisper.Models.Server;
-import com.morris.SocketWhisper.Requests.WeatherRequest;
+import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
