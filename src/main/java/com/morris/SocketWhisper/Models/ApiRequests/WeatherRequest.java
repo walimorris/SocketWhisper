@@ -1,8 +1,10 @@
 package com.morris.SocketWhisper.Models.ApiRequests;
 
-import com.morris.SocketWhisper.Models.Request;
+import com.morris.SocketWhisper.Models.BasicRequest;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+
 import java.io.IOException;
 
 /**
@@ -12,7 +14,7 @@ import java.io.IOException;
  *
  * @author Wali Morris<walimmorris@gmail.com>
  */
-public class WeatherRequest implements Request {
+public class WeatherRequest implements BasicRequest {
     final private Response response;
 
     /**
@@ -22,7 +24,7 @@ public class WeatherRequest implements Request {
      */
     public WeatherRequest(String city) throws IOException {
         OkHttpClient client = new OkHttpClient();
-        com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder()
+        Request request = new com.squareup.okhttp.Request.Builder()
                 .url("https://community-open-weather-map.p.rapidapi.com/find?type=" +
                         "link%252C%20accurate&units=imperial%252C%20metric&q=" + city)
                 .get()
