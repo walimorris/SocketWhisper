@@ -1,6 +1,7 @@
 com/morris/SocketWhisper/Models/Client.class
 com/morris/SocketWhisper/Models/Impl/ClientNode.class
+com/morris/SocketWhisper/Models/ApiRequests/WeatherRequest.class
 com/morris/SocketWhisper/Models/Impl/RpiServer.class
-com/morris/SocketWhisper/Requests/WeatherRequest.class
+com/morris/SocketWhisper/Models/BasicRequest.class
 com/morris/SocketWhisper/Models/Server.class
 com/morris/SocketWhisper/Main.class
