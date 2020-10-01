@@ -5,6 +5,7 @@ import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,11 +34,7 @@ public class RpiServer implements Server {
             Socket clientSocket = listen(this.rpiServer);
             String message = getClientRequest(clientSocket);
 
-            while ( !message.isEmpty() ) {
-
-                showClientMessage(message);
-                sendClientWhisperEcho(clientSocket, message);
-                message = getClientRequest(clientSocket);
+            while ( !message.equals("exit") ) {
 
                 if ( isExitRequest(message) ) {
                     disconnectClient(clientSocket);
@@ -48,6 +45,10 @@ public class RpiServer implements Server {
                     fetchWeatherRequest(clientSocket);
                     message = getClientRequest(clientSocket);
                 }
+
+                showClientMessage(message);
+                sendClientWhisperEcho(clientSocket, message);
+                message = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
