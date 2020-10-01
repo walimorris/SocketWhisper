@@ -26,7 +26,6 @@ public class RpiServer implements Server {
     }
 
     public void run() {
-        System.out.println("Executing : " + Thread.currentThread().getName());
         showServerInfo(this.rpiServer);
 
         try {
