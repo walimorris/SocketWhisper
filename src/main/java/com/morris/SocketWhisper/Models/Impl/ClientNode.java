@@ -42,7 +42,7 @@ public class ClientNode implements Client {
                 whisper = showClientPrompt(clientInput);
             }
         } catch (IOException e) {
-            System.out.println("some error occurred!");
+            System.out.println("Server Interrupted!");
             try {
                 shutDownClientConnection(this.client);
             } catch (IOException ioException) {

@@ -3,7 +3,7 @@ package com.morris.SocketWhisper.Models.Impl;
 import com.morris.SocketWhisper.Models.Server;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 
-import java.io.DataInputStream;
+import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -90,8 +90,8 @@ public class RpiServer implements Server {
      * @throws IOException some error occurs.
      */
     public String getClientRequest(Socket clientSocket) throws IOException {
-        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        return in.readUTF();
+        BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
+        return in.toString();
     }
 
     /**
@@ -147,8 +147,8 @@ public class RpiServer implements Server {
     public void fetchWeatherRequest(Socket clientSocket) throws IOException {
         DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
         out.writeUTF("[Whisper heard] which city: ");
-        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        String message = in.readUTF();
+        BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
+        String message = in.toString();
         WeatherRequest weatherRequest = new WeatherRequest(message);
         out.writeUTF(weatherRequest.getResponse());
     }
