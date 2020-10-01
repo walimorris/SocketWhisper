@@ -35,6 +35,10 @@ public class RpiServer implements Server {
 
             while ( !message.isEmpty() ) {
 
+                showClientMessage(message);
+                sendClientWhisperEcho(clientSocket, message);
+                message = getClientRequest(clientSocket);
+
                 if ( isExitRequest(message) ) {
                     disconnectClient(clientSocket);
                     continue; // doesn't shut down server, continues to listen
@@ -44,10 +48,6 @@ public class RpiServer implements Server {
                     fetchWeatherRequest(clientSocket);
                     message = getClientRequest(clientSocket);
                 }
-
-                showClientMessage(message);
-                sendClientWhisperEcho(clientSocket, message);
-                message = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
