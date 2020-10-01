@@ -30,8 +30,8 @@ public class ClientNode implements Client {
         Scanner clientInput = connectClientComm();
         try {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
-            while (true) {
-                String whisper = showClientPrompt(clientInput);
+            String whisper = showClientPrompt(clientInput);
+            while ( !whisper.isEmpty() ) {
                 if ( isExitRequest(whisper) ) {
                     shutDownClientConnection(this.client);
                 }
@@ -39,9 +39,15 @@ public class ClientNode implements Client {
                 try ( DataInputStream serverIn = buildServerToClientComm(this.client) ) {
                     showServerResponse(serverIn);
                 }
+                whisper = showClientPrompt(clientInput);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("some error occurred!");
+            try {
+                shutDownClientConnection(this.client);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 
