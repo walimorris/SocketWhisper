@@ -37,7 +37,7 @@ public class ClientNode implements Client {
                 }
                 sendClientCommToServer(clientOut, whisper);
                 try ( DataInputStream serverIn = buildServerToClientComm(this.client) ) {
-                    showSeverResponse(serverIn);
+                    showServerResponse(serverIn);
                 }
             }
         } catch (IOException e) {
@@ -133,7 +133,7 @@ public class ClientNode implements Client {
      * @throws IOException some error occurs.
      */
     @Override
-    public void showSeverResponse(DataInputStream serverMessage) throws IOException {
+    public void showServerResponse(DataInputStream serverMessage) throws IOException {
         System.out.println(serverMessage.readUTF());
     }
 }

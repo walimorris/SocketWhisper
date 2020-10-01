@@ -18,7 +18,7 @@ import java.net.Socket;
  *
  * @author Wali Morris<walimorris@gmail.com>
  */
-public class RpiServer extends Thread implements Server  {
+public class RpiServer implements Server {
     private final ServerSocket rpiServer;
 
     public RpiServer(int port) throws IOException {
@@ -26,13 +26,19 @@ public class RpiServer extends Thread implements Server  {
     }
 
     public void run() {
+        System.out.println("Executing : " + Thread.currentThread().getName());
         showServerInfo(this.rpiServer);
 
         try {
             Socket clientSocket = listen(this.rpiServer);
             String message = getClientRequest(clientSocket);
 
-            while ( !(isExitRequest(message)) ) {
+            while ( true ) {
+
+                if ( isExitRequest(message) ) {
+                    disconnectClient(clientSocket);
+                    continue; // doesn't shut down server, continues to listen
+                }
                 showClientMessage(message);
                 sendClientWhisperEcho(clientSocket, message);
                 message = getClientRequest(clientSocket);
@@ -145,5 +151,21 @@ public class RpiServer extends Thread implements Server  {
         String message = in.readUTF();
         WeatherRequest weatherRequest = new WeatherRequest(message);
         out.writeUTF(weatherRequest.getResponse());
+    }
+
+    /**
+     * When a client request to disconnect from server via a "exit" message sent to Rpi Server
+     * the Rpi Server will conduct proper closing steps and also send server monitor messages
+     * of clients who are disconnecting.
+     * @param clientSocket The current client connected to socket
+     * @throws IOException some error occurred while disconnecting
+     */
+    @Override
+    public void disconnectClient(Socket clientSocket) throws IOException {
+        System.out.println("Incoming disconnect request from: " +
+                clientSocket.getRemoteSocketAddress().toString());
+        System.out.println("disconnecting...");
+        clientSocket.close();
+        System.out.println("Disconnected: " + clientSocket.getRemoteSocketAddress());
     }
 }

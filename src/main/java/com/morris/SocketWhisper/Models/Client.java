@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author Wali Morris<walimorris@gmail.com>
  *
  */
-public interface Client {
+public interface Client extends Runnable {
 
     void run();
 
@@ -30,5 +30,5 @@ public interface Client {
 
     DataInputStream buildServerToClientComm(Socket client) throws IOException;
 
-    void showSeverResponse(DataInputStream serverMessage) throws IOException;
+    void showServerResponse(DataInputStream serverMessage) throws IOException;
 }

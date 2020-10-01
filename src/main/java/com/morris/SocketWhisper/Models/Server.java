@@ -10,7 +10,7 @@ import java.net.Socket;
  *
  * @author Wali Morris<walimmorris@gmail.com>
  */
-public interface Server {
+public interface Server extends Runnable {
 
     void showServerInfo(ServerSocket rpiServer);
 
@@ -21,4 +21,6 @@ public interface Server {
     void showClientMessage(String message);
 
     void sendClientWhisperEcho(Socket clientSocket, String message) throws IOException;
+
+    void disconnectClient(Socket clientSocket) throws IOException;
 }
