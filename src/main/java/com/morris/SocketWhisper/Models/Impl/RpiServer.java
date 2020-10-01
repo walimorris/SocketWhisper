@@ -33,20 +33,21 @@ public class RpiServer implements Server {
             Socket clientSocket = listen(this.rpiServer);
             String message = getClientRequest(clientSocket);
 
-            while ( true ) {
+            while ( !message.isBlank() ) {
 
                 if ( isExitRequest(message) ) {
                     disconnectClient(clientSocket);
                     continue; // doesn't shut down server, continues to listen
                 }
-                showClientMessage(message);
-                sendClientWhisperEcho(clientSocket, message);
-                message = getClientRequest(clientSocket);
 
                 if ( isWeatherRequest(message) ) {
                     fetchWeatherRequest(clientSocket);
                     message = getClientRequest(clientSocket);
                 }
+
+                showClientMessage(message);
+                sendClientWhisperEcho(clientSocket, message);
+                message = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
