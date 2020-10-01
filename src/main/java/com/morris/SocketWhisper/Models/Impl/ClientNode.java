@@ -2,11 +2,7 @@ package com.morris.SocketWhisper.Models.Impl;
 
 import com.morris.SocketWhisper.Models.Client;
 
-import java.io.OutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -36,7 +32,7 @@ public class ClientNode implements Client {
                     shutDownClientConnection(this.client);
                 }
                 sendClientCommToServer(clientOut, whisper);
-                try ( DataInputStream serverIn = buildServerToClientComm(this.client) ) {
+                try ( BufferedInputStream serverIn = buildServerToClientComm(this.client) ) {
                     showServerResponse(serverIn);
                 }
                 whisper = showClientPrompt(clientInput);
@@ -128,9 +124,8 @@ public class ClientNode implements Client {
      * @throws IOException some error occurs
      */
     @Override
-    public DataInputStream buildServerToClientComm(Socket client) throws IOException {
-        InputStream serverToClient = client.getInputStream();
-        return new DataInputStream(serverToClient);
+    public BufferedInputStream buildServerToClientComm(Socket client) throws IOException {
+        return new BufferedInputStream(client.getInputStream());
     }
 
     /**
@@ -139,7 +134,7 @@ public class ClientNode implements Client {
      * @throws IOException some error occurs.
      */
     @Override
-    public void showServerResponse(DataInputStream serverMessage) throws IOException {
-        System.out.println(serverMessage.readUTF());
+    public void showServerResponse(BufferedInputStream serverMessage) throws IOException {
+        System.out.println(serverMessage.read());
     }
 }
