@@ -33,7 +33,7 @@ public class RpiServer implements Server {
             Socket clientSocket = listen(this.rpiServer);
             String message = getClientRequest(clientSocket);
 
-            while ( !message.isBlank() ) {
+            while ( !message.isEmpty() ) {
 
                 if ( isExitRequest(message) ) {
                     disconnectClient(clientSocket);
