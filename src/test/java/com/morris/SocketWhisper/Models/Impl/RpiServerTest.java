@@ -23,7 +23,8 @@ public class RpiServerTest {
      */
     @Test
     public void runTest() {
-
+        String message = "exit";
+        Assert.assertTrue(message.equals("exit"));
     }
 }
 
