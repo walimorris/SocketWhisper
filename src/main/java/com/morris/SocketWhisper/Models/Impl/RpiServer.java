@@ -87,6 +87,13 @@ public class RpiServer implements Server {
      */
     public String getClientRequest(Socket clientSocket) throws IOException {
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        if ( in.available() == 0 ) {
+            int n = in.available();
+            while ( n == 0 ) {
+                n = in.available();
+                System.out.println("waiting");
+            }
+        }
         return in.readUTF();
     }
 

@@ -32,7 +32,7 @@ public class ClientNode implements Client {
                     shutDownClientConnection(this.client);
                 }
                 sendClientCommToServer(clientOut, whisper);
-                try ( BufferedInputStream serverIn = buildServerToClientComm(this.client) ) {
+                try ( DataInputStream serverIn = buildServerToClientComm(this.client) ) {
                     showServerResponse(serverIn);
                 }
                 whisper = showClientPrompt(clientInput);
@@ -124,8 +124,8 @@ public class ClientNode implements Client {
      * @throws IOException some error occurs
      */
     @Override
-    public BufferedInputStream buildServerToClientComm(Socket client) throws IOException {
-        return new BufferedInputStream(client.getInputStream());
+    public DataInputStream buildServerToClientComm(Socket client) throws IOException {
+        return new DataInputStream(client.getInputStream());
     }
 
     /**
@@ -134,7 +134,7 @@ public class ClientNode implements Client {
      * @throws IOException some error occurs.
      */
     @Override
-    public void showServerResponse(BufferedInputStream serverMessage) throws IOException {
+    public void showServerResponse(DataInputStream serverMessage) throws IOException {
         System.out.println(serverMessage.read());
     }
 }

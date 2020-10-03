@@ -1,6 +1,6 @@
 package com.morris.SocketWhisper.Models;
 
-import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -28,7 +28,7 @@ public interface Client extends Runnable {
 
     void sendClientCommToServer(DataOutputStream clientOut, String whisper) throws IOException;
 
-    BufferedInputStream buildServerToClientComm(Socket client) throws IOException;
+    DataInputStream buildServerToClientComm(Socket client) throws IOException;
 
-    void showServerResponse(BufferedInputStream serverMessage) throws IOException;
+    void showServerResponse(DataInputStream serverMessage) throws IOException;
 }
