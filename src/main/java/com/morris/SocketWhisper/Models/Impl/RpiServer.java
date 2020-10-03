@@ -156,7 +156,7 @@ public class RpiServer implements Server, Runnable {
     }
 
     private boolean isMarsPhotoRequest(String message) {
-        return message.equals("mars");
+        return message.equals("mars-photos");
     }
 
     /**
