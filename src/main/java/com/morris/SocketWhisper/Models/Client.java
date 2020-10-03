@@ -1,6 +1,5 @@
 package com.morris.SocketWhisper.Models;
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

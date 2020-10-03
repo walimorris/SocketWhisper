@@ -7,6 +7,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The RpiServer Class extends Thread as every client will run on its very own thread. The Rpi
@@ -18,6 +21,8 @@ import java.net.Socket;
  * @author Wali Morris<walimorris@gmail.com>
  */
 public class RpiServer implements Server, Runnable {
+    private final static Logger AUDIT_LOGGER = Logger.getLogger("requests");
+    private final static Logger ERROR_LOGGER = Logger.getLogger("errors");
     private final ServerSocket rpiServer;
 
     public RpiServer(int port) throws IOException {
@@ -28,24 +33,34 @@ public class RpiServer implements Server, Runnable {
         showServerInfo(this.rpiServer);
 
         try {
+            Date date = new Date();
             Socket clientSocket = listen(this.rpiServer);
             String clientWhisper = getClientInitialRequest(clientSocket).toString();
+
+            AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                    " request = " + clientWhisper);
 
             while (true) {
 
                 if (isExitRequest(clientWhisper)) {
                     disconnectClient(clientSocket);
+
+                    AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                            "status: " + "disconnect=" + clientSocket.isClosed());
                 }
 
                 if (isWeatherRequest(clientWhisper)) {
                     fetchWeatherRequest(clientSocket);
+
+                    AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                            " request=weatherRequest");
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
                 clientWhisper = getClientRequest(clientSocket).toString();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            ERROR_LOGGER.log(Level.SEVERE, "couldn't receive client request", e.getMessage());
         }
     }
 
