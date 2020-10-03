@@ -15,7 +15,7 @@ public class ClientNode implements Client {
     private final Socket client;
 
     public ClientNode() throws IOException {
-        String serverName = "10.0.0.13";
+        String serverName = "10.0.0.18";
         int serverPort = 6066;
         this.client = new Socket(serverName, serverPort);
     }
@@ -25,7 +25,8 @@ public class ClientNode implements Client {
         Scanner clientInput = connectClientComm();
         try {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
-            while (true) {
+
+            while ( true ) {
                 String whisper = showClientPrompt(clientInput);
                 if (isExitRequest(whisper)) {
                     shutDownClientConnection(this.client);
