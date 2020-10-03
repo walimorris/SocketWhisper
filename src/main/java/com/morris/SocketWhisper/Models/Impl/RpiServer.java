@@ -35,12 +35,14 @@ public class RpiServer implements Server {
             while ( !(isExitRequest(message)) ) {
                 showClientMessage(message);
                 sendClientWhisperEcho(clientSocket, message);
-                message = getClientRequest(clientSocket);
 
                 if ( isWeatherRequest(message) ) {
                     fetchWeatherRequest(clientSocket);
                     message = getClientRequest(clientSocket);
+                    continue;
                 }
+
+                message = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
