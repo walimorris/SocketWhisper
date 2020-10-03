@@ -29,7 +29,7 @@ public class RpiServer implements Server, Runnable {
 
         try {
             Socket clientSocket = listen(this.rpiServer);
-            String clientWhisper = getClientInitialRequest(clientSocket);
+            String clientWhisper = getClientInitialRequest(clientSocket).toString();
 
             while (true) {
 
@@ -40,8 +40,9 @@ public class RpiServer implements Server, Runnable {
                 if (isWeatherRequest(clientWhisper)) {
                     fetchWeatherRequest(clientSocket);
                 }
+                showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
-                clientWhisper = getClientRequest(clientSocket);
+                clientWhisper = getClientRequest(clientSocket).toString();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,14 +85,14 @@ public class RpiServer implements Server, Runnable {
      * @return String containing client request message.
      * @throws IOException some error occurs.
      */
-    public String getClientInitialRequest(Socket clientSocket) throws IOException {
+    public DataInputStream getClientInitialRequest(Socket clientSocket) throws IOException {
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        return in.readUTF();
+        return in;
     }
 
-    public String getClientRequest(Socket clientSocket) throws IOException {
+    public DataInputStream getClientRequest(Socket clientSocket) throws IOException {
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        return in.readUTF();
+        return in;
     }
 
     /**

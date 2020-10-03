@@ -133,6 +133,6 @@ public class ClientNode implements Client {
      */
     @Override
     public void showServerResponse(DataInputStream serverMessage) throws IOException {
-        System.out.println(serverMessage.read());
+        System.out.println(serverMessage.readUTF());
     }
 }

@@ -1,5 +1,6 @@
 package com.morris.SocketWhisper.Models;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,7 +17,7 @@ public interface Server {
 
     Socket listen(ServerSocket rpiServer) throws IOException;
 
-    String getClientRequest(Socket clientSocket) throws IOException;
+    DataInputStream getClientRequest(Socket clientSocket) throws IOException;
 
     void showClientMessage(String message);
 
