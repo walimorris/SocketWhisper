@@ -22,4 +22,6 @@ public interface Server {
     void showClientMessage(String message);
 
     void sendClientWhisperEcho(Socket clientSocket, String message) throws IOException;
+
+    void disconnectClient(Socket clientSocket) throws IOException;
 }
