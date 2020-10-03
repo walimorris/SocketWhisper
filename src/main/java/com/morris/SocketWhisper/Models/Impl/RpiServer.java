@@ -34,7 +34,7 @@ public class RpiServer implements Server, Runnable {
             while (true) {
 
                 if (isExitRequest(clientWhisper)) {
-                    clientSocket.close();
+                    disconnectClient(clientSocket);
                 }
 
                 if (isWeatherRequest(clientWhisper)) {
@@ -86,13 +86,11 @@ public class RpiServer implements Server, Runnable {
      * @throws IOException some error occurs.
      */
     public DataInputStream getClientInitialRequest(Socket clientSocket) throws IOException {
-        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        return in;
+        return new DataInputStream(clientSocket.getInputStream());
     }
 
     public DataInputStream getClientRequest(Socket clientSocket) throws IOException {
-        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        return in;
+        return new DataInputStream(clientSocket.getInputStream());
     }
 
     /**
@@ -152,5 +150,12 @@ public class RpiServer implements Server, Runnable {
         String message = in.readUTF();
         WeatherRequest weatherRequest = new WeatherRequest(message);
         out.writeUTF(weatherRequest.getResponse());
+    }
+
+    public void disconnectClient(Socket clientSocket) throws IOException {
+        System.out.println("client at : " + clientSocket.getInetAddress() + "requesting disconnect");
+        clientSocket.close();
+        System.out.println(clientSocket.getInetAddress() + "disconnected!");
+        this.run();
     }
 }

@@ -100,7 +100,8 @@ public class ClientNode implements Client {
     @Override
     public void shutDownClientConnection(Socket client) throws IOException {
         client.close();
-        System.out.println("Client shutting down...");
+        System.out.println("Client shutting down, thanks for using SocketWhisper. Goodbye!");
+        System.exit(0);
     }
 
     /**
