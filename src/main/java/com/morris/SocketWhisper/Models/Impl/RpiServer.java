@@ -40,8 +40,8 @@ public class RpiServer implements Server, Runnable {
                 if (isWeatherRequest(clientWhisper)) {
                     fetchWeatherRequest(clientSocket);
                 }
-                clientWhisper = getClientRequest(clientSocket);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
+                clientWhisper = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();

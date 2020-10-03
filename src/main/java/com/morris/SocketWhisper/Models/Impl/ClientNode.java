@@ -33,9 +33,7 @@ public class ClientNode implements Client {
                     shutDownClientConnection(this.client);
                 }
                 sendClientCommToServer(clientOut, whisper);
-                if (!serverIn.readUTF().isEmpty()) {
-                    showServerResponse(serverIn);
-                }
+                showServerResponse(serverIn);
                 whisper = showClientPrompt(clientInput);
             }
         } catch (IOException e) {
