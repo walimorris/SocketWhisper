@@ -36,6 +36,7 @@ public class ClientNode implements Client {
                 if (!serverIn.readUTF().isEmpty()) {
                     showServerResponse(serverIn);
                 }
+                clientInput = connectClientComm();
                 whisper = showClientPrompt(clientInput);
             }
         } catch (IOException e) {
