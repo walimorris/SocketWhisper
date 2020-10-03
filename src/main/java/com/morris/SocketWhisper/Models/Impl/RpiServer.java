@@ -5,6 +5,7 @@ import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,7 +18,7 @@ import java.net.Socket;
  *
  * @author Wali Morris<walimorris@gmail.com>
  */
-public class RpiServer implements Server {
+public class RpiServer implements Server, Runnable {
     private final ServerSocket rpiServer;
 
     public RpiServer(int port) throws IOException {
@@ -29,27 +30,21 @@ public class RpiServer implements Server {
 
         try {
             Socket clientSocket = listen(this.rpiServer);
-            DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-            DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-            String message = getClientRequest(in);
+            String clientWhisper = getClientInitialRequest(clientSocket);
 
-            while ( !message.isEmpty() ) {
+            while (true) {
 
-                if ( isExitRequest(message) ) {
-                    disconnectClient(clientSocket, out, in);
+                if (isExitRequest(clientWhisper)) {
+                    clientSocket.close();
                 }
 
-                if ( isWeatherRequest(message) ) {
-                    fetchWeatherRequest(in, out);
-                    message = getClientRequest(in);
+                if (isWeatherRequest(clientWhisper)) {
+                    fetchWeatherRequest(clientSocket);
                 }
-
-                showClientMessage(message);
-                sendClientWhisperEcho(message, out);
-                message = getClientRequest(in);
+                clientWhisper = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
-            run();
+            e.printStackTrace();
         }
     }
 
@@ -85,12 +80,18 @@ public class RpiServer implements Server {
     /**
      * Raspberry Pi server, while listening, has received request from some client. Fetches client request.
      *
+     * @param clientSocket {@link Socket} of client requesting communication with Rpi Server.
      * @return String containing client request message.
      * @throws IOException some error occurs.
      */
-    public String getClientRequest(DataInputStream in) throws IOException {
-        in.readUTF();
-        return in.toString();
+    public String getClientInitialRequest(Socket clientSocket) throws IOException {
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        return in.readUTF();
+    }
+
+    public String getClientRequest(Socket clientSocket) throws IOException {
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        return in.readUTF();
     }
 
     /**
@@ -117,10 +118,12 @@ public class RpiServer implements Server {
      * Sends a message to client through clients binded {@link Socket}. This is an echo message; a message from
      * the client that the server received and is repeated it back to client.
      *
+     * @param clientSocket binded client {@link Socket} which is allowing Server-Client communication.
      * @param message      original message from client which server is sending back as echo.
      * @throws IOException some error occurs.
      */
-    public void sendClientWhisperEcho(String message, DataOutputStream out) throws IOException {
+    public void sendClientWhisperEcho(Socket clientSocket, String message) throws IOException {
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
         out.writeUTF("Whisper heard: " + message);
     }
 
@@ -137,31 +140,16 @@ public class RpiServer implements Server {
     /**
      * Client requests a weather report for a certain city. Server fetches and executes a new
      * WeatherRequest see {@link WeatherRequest}.
+     *
+     * @param clientSocket client {@link Socket}
      * @throws IOException some error occurs.
      */
-    public void fetchWeatherRequest(DataInputStream in, DataOutputStream out) throws IOException {
+    public void fetchWeatherRequest(Socket clientSocket) throws IOException {
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
         out.writeUTF("[Whisper heard] which city: ");
-        in.readUTF();
-        String message = in.toString();
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        String message = in.readUTF();
         WeatherRequest weatherRequest = new WeatherRequest(message);
         out.writeUTF(weatherRequest.getResponse());
-    }
-
-    /**
-     * When a client request to disconnect from server via a "exit" message sent to Rpi Server
-     * the Rpi Server will conduct proper closing steps and also send server monitor messages
-     * of clients who are disconnecting.
-     * @param clientSocket The current client connected to socket
-     * @throws IOException some error occurred while disconnecting
-     */
-    @Override
-    public void disconnectClient(Socket clientSocket, DataOutputStream out, DataInputStream in) throws IOException {
-        System.out.println("Incoming disconnect request from: " +
-                clientSocket.getRemoteSocketAddress().toString());
-        System.out.println("disconnecting...");
-        clientSocket.close();
-        out.close();
-        in.close();
-        System.out.println("Disconnected: " + clientSocket.getRemoteSocketAddress());
     }
 }

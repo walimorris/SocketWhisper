@@ -48,7 +48,7 @@ public class ClientNode implements Client {
         }
     }
 
-        /**
+    /**
      * Builds a report depicting host and client connection information and a client
      * communication {@link Scanner} object for client input.
      * @return client communication Scanner.
