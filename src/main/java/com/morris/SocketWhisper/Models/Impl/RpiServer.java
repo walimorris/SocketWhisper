@@ -1,5 +1,6 @@
 package com.morris.SocketWhisper.Models.Impl;
 
+import com.morris.SocketWhisper.Models.ApiRequests.MarPhotoRequest;
 import com.morris.SocketWhisper.Models.Server;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 import java.io.DataInputStream;
@@ -39,18 +40,24 @@ public class RpiServer implements Server, Runnable {
             AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                     " request = " + clientWhisper);
 
-            while (true) {
+            while ( true ) {
 
-                if (isExitRequest(clientWhisper)) {
+                if ( isExitRequest(clientWhisper) ) {
                     disconnectClient(clientSocket);
                     AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                             "status: " + "disconnect=" + clientSocket.isClosed());
                 }
 
-                if (isWeatherRequest(clientWhisper)) {
+                if ( isWeatherRequest(clientWhisper) ) {
                     fetchWeatherRequest(clientSocket);
                     AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
-                            " request=weatherRequest");
+                            " request=WeatherRequest");
+                }
+
+                if ( isMarsPhotoRequest(clientWhisper) ) {
+                    fetchMarsPhotoRequest(clientSocket);
+                    AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                            " request=MarsPhotoRequest");
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
@@ -148,6 +155,10 @@ public class RpiServer implements Server, Runnable {
         return message.equals("weather");
     }
 
+    private boolean isMarsPhotoRequest(String message) {
+        return message.equals("mars");
+    }
+
     /**
      * Client requests a weather report for a certain city. Server fetches and executes a new
      * WeatherRequest see {@link WeatherRequest}.
@@ -162,6 +173,15 @@ public class RpiServer implements Server, Runnable {
         String message = in.readUTF();
         WeatherRequest weatherRequest = new WeatherRequest(message);
         out.writeUTF(weatherRequest.getResponse());
+    }
+
+    public void fetchMarsPhotoRequest(Socket clientSocket) throws IOException {
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+        out.writeUTF("[Whisper heard] type date in format YYYY-MM-DD: ");
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        String message = in.readUTF();
+        MarPhotoRequest marsPhotoRequest = new MarPhotoRequest(message);
+        out.writeUTF(marsPhotoRequest.getResponse());
     }
 
     public void disconnectClient(Socket clientSocket) throws IOException {
