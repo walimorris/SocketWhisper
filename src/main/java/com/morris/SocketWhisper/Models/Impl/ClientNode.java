@@ -28,7 +28,7 @@ public class ClientNode implements Client {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
             DataInputStream serverIn = buildServerToClientComm(this.client);
             String whisper = showClientPrompt(clientInput);
-            while (!whisper.isEmpty()) {
+            while (true) {
                 if (isExitRequest(whisper)) {
                     shutDownClientConnection(this.client);
                 }
