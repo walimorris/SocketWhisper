@@ -3,6 +3,7 @@ package com.morris.SocketWhisper.Models.Impl;
 import com.morris.SocketWhisper.Models.Server;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class RpiServer implements Server, Runnable {
 
         try {
             Socket clientSocket = listen(this.rpiServer);
-            String message = getClientRequest(clientSocket);
+            String message = getClientInitialRequest(clientSocket);
 
             while ( !(isExitRequest(message)) ) {
                 showClientMessage(message);
@@ -83,8 +84,13 @@ public class RpiServer implements Server, Runnable {
      * @return String containing client request message.
      * @throws IOException some error occurs.
      */
-    public String getClientRequest(Socket clientSocket) throws IOException {
+    public String getClientInitialRequest(Socket clientSocket) throws IOException {
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        return in.readUTF();
+    }
+
+    public String getClientRequest(Socket clientSocket) throws IOException {
+        DataInputStream in = (DataInputStream) clientSocket.getInputStream();
         return in.readUTF();
     }
 
