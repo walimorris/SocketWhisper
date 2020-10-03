@@ -92,7 +92,7 @@ public class ClientNode implements Client {
     }
 
     public DataInputStream buildServerToClientComm(Socket client) throws IOException {
-        InputStream serverToClient = client.getInputStream();
+        DataInputStream serverToClient = (DataInputStream) client.getInputStream();
         return new DataInputStream(serverToClient);
     }
 
