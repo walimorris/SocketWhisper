@@ -2,8 +2,10 @@ package com.morris.SocketWhisper;
 
 import com.morris.SocketWhisper.Models.Impl.ClientNode;
 import com.morris.SocketWhisper.Models.Impl.RpiServer;
+
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -40,21 +42,25 @@ public class Main {
      * Server node type has been chosen by user, this functionality starts the
      * server building process.
      * @param input : user input
-     * @throws IOException some io exception
+     * @throws IOException some error occurred
      */
     public static void startRpiServer(Scanner input) throws IOException {
         System.out.print("Please enter port number: ");
         int port = input.nextInt();
-        RpiServer rpiServer = new RpiServer(port);
+        Runnable rpiServer = new RpiServer(port);
         rpiServer.run();
     }
 
+    /**
+     * User has requested to run program as a service connecting to Raspberry Pi Server.
+     * A {@link ExecutorService} is instantiated to handle this new client on its very
+     * own thread. Allowing the Raspberry Pi to have multiple clients running on single
+     * port.
+     * @throws IOException
+     */
     public static void startClient() throws IOException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
         ClientNode client = new ClientNode();
-        client.run();
+        executor.execute(client);
     }
 }
-
-
-
-
