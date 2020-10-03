@@ -36,7 +36,6 @@ public class RpiServer implements Server, Runnable {
             Date date = new Date();
             Socket clientSocket = listen(this.rpiServer);
             String clientWhisper = getClientInitialRequest(clientSocket).toString();
-
             AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                     " request = " + clientWhisper);
 
@@ -44,14 +43,12 @@ public class RpiServer implements Server, Runnable {
 
                 if (isExitRequest(clientWhisper)) {
                     disconnectClient(clientSocket);
-
                     AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                             "status: " + "disconnect=" + clientSocket.isClosed());
                 }
 
                 if (isWeatherRequest(clientWhisper)) {
                     fetchWeatherRequest(clientSocket);
-
                     AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                             " request=weatherRequest");
                 }
