@@ -3,7 +3,7 @@ package com.morris.SocketWhisper.Models.Impl;
 import com.morris.SocketWhisper.Models.Server;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 
-import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -32,21 +32,15 @@ public class RpiServer implements Server {
             Socket clientSocket = listen(this.rpiServer);
             String message = getClientRequest(clientSocket);
 
-            while ( !message.isEmpty() ) {
-
-                if ( isExitRequest(message) ) {
-                    disconnectClient(clientSocket);
-                    continue; // doesn't shut down server, continues to listen
-                }
+            while ( !(isExitRequest(message)) ) {
+                showClientMessage(message);
+                sendClientWhisperEcho(clientSocket, message);
+                message = getClientRequest(clientSocket);
 
                 if ( isWeatherRequest(message) ) {
                     fetchWeatherRequest(clientSocket);
                     message = getClientRequest(clientSocket);
                 }
-
-                showClientMessage(message);
-                sendClientWhisperEcho(clientSocket, message);
-                message = getClientRequest(clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,8 +84,8 @@ public class RpiServer implements Server {
      * @throws IOException some error occurs.
      */
     public String getClientRequest(Socket clientSocket) throws IOException {
-        BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
-        return in.toString();
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        return in.readUTF();
     }
 
     /**
@@ -147,8 +141,8 @@ public class RpiServer implements Server {
     public void fetchWeatherRequest(Socket clientSocket) throws IOException {
         DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
         out.writeUTF("[Whisper heard] which city: ");
-        BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
-        String message = in.toString();
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+        String message = in.readUTF();
         WeatherRequest weatherRequest = new WeatherRequest(message);
         out.writeUTF(weatherRequest.getResponse());
     }
