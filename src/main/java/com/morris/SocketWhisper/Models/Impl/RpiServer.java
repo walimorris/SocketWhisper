@@ -83,6 +83,7 @@ public class RpiServer implements Server {
         } catch (IOException e) {
             ERROR_LOGGER.log(Level.SEVERE, "couldn't receive client request", e.getMessage());
         }
+        this.run();
     }
 
     /**
