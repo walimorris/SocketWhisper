@@ -8,7 +8,6 @@ public class JokesDB {
     public static void connect() {
         Connection conn = null;
         try {
-
             String url = "jdbc:sqlite/home/pi/jokes.db";
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to Jokes Database has been established");

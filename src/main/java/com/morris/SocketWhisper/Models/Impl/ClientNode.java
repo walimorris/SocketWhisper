@@ -36,6 +36,7 @@ public class ClientNode implements Client {
                 switch( whisper ) {
                     case 4:
                     shutDownClientConnection(this.client);
+                    break;
                 }
                 String whisperStr = null;
                 for ( int key : options.keySet() ) {

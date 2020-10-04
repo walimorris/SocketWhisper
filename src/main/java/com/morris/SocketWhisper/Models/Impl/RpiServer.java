@@ -60,21 +60,23 @@ public class RpiServer implements Server, Runnable {
                         fetchWeatherRequest(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 " request=WeatherRequest");
+                        break;
                     case 2:
                         fetchMarsPhotoRequest(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 " request=MarsPhotoRequest");
-
+                        break;
                     case 3:
                         JokesDB.connect();
-
+                        break;
                     case 4:
                         disconnectClient(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 "status: " + "disconnect=" + clientSocket.isClosed());
-
+                        break;
                     case 5:
                         disconnectClient(clientSocket); // implement receiving a int thats not an option
+                        break;
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
