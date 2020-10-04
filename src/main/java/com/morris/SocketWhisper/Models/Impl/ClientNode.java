@@ -25,7 +25,7 @@ public class ClientNode implements Client {
 
     @Override
     public void run() {
-        BufferedReader clientInput = connectClientComm();
+        Scanner clientInput = connectClientComm();
         try {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
             DataInputStream serverIn = buildServerToClientComm(this.client);
@@ -67,11 +67,11 @@ public class ClientNode implements Client {
      * @return client communication Scanner.
      */
     @Override
-    public BufferedReader connectClientComm() {
+    public Scanner connectClientComm() {
         System.out.println("connected to server: " + client.getInetAddress().getHostAddress());
         System.out.println("connected to port: " + client.getLocalPort());
         System.out.println("Connected to: " + client.getRemoteSocketAddress());
-        return new BufferedReader( new InputStreamReader(System.in));
+        return new Scanner(System.in);
     }
 
     /**
@@ -93,7 +93,7 @@ public class ClientNode implements Client {
      * @return String which is client input.
      */
     @Override
-    public int showClientPrompt(BufferedReader clientInput) throws IOException {
+    public int showClientPrompt(Scanner clientInput) {
         Map<Integer, String> options = getPromptMap();
         StringBuilder prompt = new StringBuilder();
         options.forEach((key, value) -> prompt
@@ -102,7 +102,7 @@ public class ClientNode implements Client {
                 .append("\n"));
         System.out.println(prompt.toString());
         System.out.print("whisper: ");
-        return clientInput.read();
+        return clientInput.nextInt();
     }
     private Map<Integer, String> getPromptMap() {
         Map<Integer, String> options = new HashMap<>();

@@ -1,6 +1,5 @@
 package com.morris.SocketWhisper.Models;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -19,11 +18,11 @@ public interface Client extends Runnable {
 
     void run();
 
-    BufferedReader connectClientComm();
+    Scanner connectClientComm();
 
     DataOutputStream buildClientToServerComm(Socket client) throws IOException;
 
-    int showClientPrompt(BufferedReader clientInput) throws IOException;
+    int showClientPrompt(Scanner clientInput);
 
     void shutDownClientConnection(Socket client) throws IOException;
 
