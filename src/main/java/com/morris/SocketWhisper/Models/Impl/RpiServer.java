@@ -3,6 +3,8 @@ package com.morris.SocketWhisper.Models.Impl;
 import com.morris.SocketWhisper.Models.ApiRequests.MarPhotoRequest;
 import com.morris.SocketWhisper.Models.Server;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
+import com.morris.SocketWhisper.db.JokesDB;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -59,6 +61,12 @@ public class RpiServer implements Server, Runnable {
                     AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                             " request=MarsPhotoRequest");
                 }
+
+                // test code
+                if ( clientWhisper.equals("jokes") ) {
+                    JokesDB.connect();
+                }
+
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
                 clientWhisper = getClientRequest(clientSocket).toString();
