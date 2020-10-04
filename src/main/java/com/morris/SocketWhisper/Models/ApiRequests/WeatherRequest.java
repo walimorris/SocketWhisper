@@ -22,14 +22,14 @@ public class WeatherRequest implements BasicRequest {
      * @param city which city to request detailed weather information about.
      * @throws IOException in case some error happens during request.
      */
-    public WeatherRequest(String city) throws IOException {
+    public WeatherRequest(String city, String apikey) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://community-open-weather-map.p.rapidapi.com/find?type=" +
                         "link%252C%20accurate&units=imperial%252C%20metric&q=" + city)
                 .get()
                 .addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "123456ABCDEFG")
+                .addHeader("x-rapidapi-key", apikey)
                 .build();
 
         response = client.newCall(request).execute();
