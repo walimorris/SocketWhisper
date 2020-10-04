@@ -43,38 +43,32 @@ public class RpiServer implements Server, Runnable {
             String clientWhisper = getClientInitialRequest(clientSocket).toString();
             AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                     " request = " + clientWhisper);
-            Map<String, Integer> clientOptions = getClientPromptMap();
 
             while (true) {
-                int clientWhisperInt = 0;
-                for (String key : clientOptions.keySet()) {
-                    if (key.equals(clientWhisper)) {
-                        clientWhisperInt = clientOptions.get(key);
-                    }
-                }
-                if (clientWhisperInt == 0) {
-                    clientWhisperInt = 5;
-                }
-                switch (clientWhisperInt) {
-                    case 1:
+                switch (clientWhisper) {
+                    case "weather" :
                         fetchWeatherRequest(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 " request=WeatherRequest");
                         break;
-                    case 2:
+
+                    case "mars" :
                         fetchMarsPhotoRequest(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 " request=MarsPhotoRequest");
                         break;
-                    case 3:
+
+                    case "jokes" :
                         JokesDB.connect();
                         break;
-                    case 4:
+
+                    case "exit":
                         disconnectClient(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 "status: " + "disconnect=" + clientSocket.isClosed());
                         break;
-                    case 5:
+
+                    case "default" :
                         disconnectClient(clientSocket); // implement receiving a int thats not an option
                         break;
                 }
@@ -184,23 +178,5 @@ public class RpiServer implements Server, Runnable {
         clientSocket.close();
         System.out.println(clientSocket.getInetAddress() + "disconnected!");
         this.run();
-    }
-
-    /**
-     * Private helper method used to build client prompt and parsing prompt choices
-     * in a {@link Map} object from int to it's String value. This conversion takes
-     * place so server can correctly read the clients option. If client chooses an
-     * option that isn't available, then server echos that this choice is not an
-     * option.
-     *
-     * @return A {@link Map} of propmt options.
-     */
-    private Map<String, Integer> getClientPromptMap() {
-        Map<String, Integer> options = new HashMap<>();
-        options.put("Weather Request", 1);
-        options.put("Mars Photos Request", 2);
-        options.put("Jokes Request", 3);
-        options.put("Exit Request", 4);
-        return options;
     }
 }

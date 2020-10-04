@@ -29,18 +29,19 @@ public class ClientNode implements Client {
         try {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
             DataInputStream serverIn = buildServerToClientComm(this.client);
-            int whisper = showClientPrompt(clientInput);
-            Map<Integer, String> options = getPromptMap();
+            String whisper = showClientPrompt(clientInput);
+            Map<String, String> options = getPromptMap();
 
             while ( true ) {
+
                 switch( whisper ) {
-                    case 4:
+                    case "4":
                     shutDownClientConnection(this.client);
                     break;
                 }
                 String whisperStr = null;
-                for ( int key : options.keySet() ) {
-                    if (key == whisper) {
+                for ( String key : options.keySet() ) {
+                    if (key.equals(whisper)) {
                         whisperStr = options.get(key);
                     }
                 }
@@ -93,23 +94,23 @@ public class ClientNode implements Client {
      * @return String which is client input.
      */
     @Override
-    public int showClientPrompt(Scanner clientInput) {
-        Map<Integer, String> options = getPromptMap();
+    public String showClientPrompt(Scanner clientInput) {
+        Map<String, String> options = getPromptMap();
         StringBuilder prompt = new StringBuilder();
         options.forEach((key, value) -> prompt
-                .append(key.toString()).append(": ")
+                .append(key).append(": ")
                 .append(value)
                 .append("\n"));
         System.out.println(prompt.toString());
         System.out.print("whisper: ");
-        return clientInput.nextInt();
+        return clientInput.next();
     }
-    private Map<Integer, String> getPromptMap() {
-        Map<Integer, String> options = new HashMap<>();
-        options.put(1, "Weather Request");
-        options.put(2, "Mars Photos Request");
-        options.put(3, "Jokes Request");
-        options.put(4, "Exit Request");
+    private Map<String, String> getPromptMap() {
+        Map<String, String> options = new HashMap<>();
+        options.put("1", "weather");
+        options.put("2", "mars");
+        options.put("3", "jokes");
+        options.put("4", "exit");
         return options;
     }
 
