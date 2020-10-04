@@ -60,6 +60,9 @@ public class RpiServer implements Server, Runnable {
 
                     case "jokes" :
                         JokesDB.connect();
+                        String conn = "connected to JokesDB";
+                        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+                        out.writeUTF(conn);
                         break;
 
                     case "exit":
