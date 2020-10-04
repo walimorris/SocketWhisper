@@ -43,9 +43,9 @@ public class RpiServer implements Server, Runnable {
             String clientWhisper = getClientInitialRequest(clientSocket).toString();
             AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                     " request = " + clientWhisper);
+            Map<String, Integer> clientOptions = getClientPromptMap();
 
             while (true) {
-                Map<String, Integer> clientOptions = getClientPromptMap();
                 int clientWhisperInt = 0;
                 for (String key : clientOptions.keySet()) {
                     if (key.equals(clientWhisper)) {

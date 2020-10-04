@@ -30,13 +30,14 @@ public class ClientNode implements Client {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
             DataInputStream serverIn = buildServerToClientComm(this.client);
             int whisper = showClientPrompt(clientInput);
+            Map<Integer, String> options = getPromptMap();
+
             while ( true ) {
                 switch( whisper ) {
                     case 4:
                     shutDownClientConnection(this.client);
                 }
                 String whisperStr = null;
-                Map<Integer, String> options = getPromptMap();
                 for ( int key : options.keySet() ) {
                     if (key == whisper) {
                         whisperStr = options.get(key);
