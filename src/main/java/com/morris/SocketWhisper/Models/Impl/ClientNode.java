@@ -103,7 +103,7 @@ public class ClientNode implements Client {
                 .append("\n"));
         System.out.println(prompt.toString());
         System.out.print("whisper: ");
-        return clientInput.next();
+        return clientInput.nextLine();
     }
     private Map<String, String> getPromptMap() {
         Map<String, String> options = new HashMap<>();
