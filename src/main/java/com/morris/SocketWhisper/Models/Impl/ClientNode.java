@@ -29,10 +29,10 @@ public class ClientNode implements Client {
         try {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
             DataInputStream serverIn = buildServerToClientComm(this.client);
-            String whisper = showClientPrompt(clientInput);
             Map<String, String> options = getPromptMap();
 
             while ( true ) {
+                String whisper = showClientPrompt(clientInput);
 
                 switch( whisper ) {
                     case "4":
@@ -50,7 +50,6 @@ public class ClientNode implements Client {
                 }
                 sendClientCommToServer(clientOut, whisperStr);
                 showServerResponse(serverIn);
-                whisper = showClientPrompt(clientInput);
             }
         } catch (IOException e) {
             System.out.println("Server Interrupted!");

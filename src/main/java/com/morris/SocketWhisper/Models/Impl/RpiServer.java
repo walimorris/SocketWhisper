@@ -11,21 +11,20 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * The RpiServer Class extends Thread as every client will run on its very own thread. The Rpi
  * can conduct different actions, gaining basic server-client communication abilities from the
- * {@link Server} interface. Other abilities like {@link WeatherRequest} come directly from the
- * RpiServer class. The Rpi begins in a "listen" state, waiting for client requests coming from
- * a {@link ClientNode}. Once the RpiServer is satisfied, communications can begin.
+ * {@link Server} interface. Other abilities{@link WeatherRequest} and {@link MarPhotoRequest}
+ * come directly from the RpiServer class. The Rpi begins in a "listen" state, waiting for
+ * client requests coming from a {@link ClientNode}. Once the RpiServer is satisfied,
+ * communications can begin.
  *
  * @author Wali Morris<walimorris@gmail.com>
  */
-public class RpiServer implements Server, Runnable {
+public class RpiServer implements Server {
     private final static Logger AUDIT_LOGGER = Logger.getLogger("requests");
     private final static Logger ERROR_LOGGER = Logger.getLogger("errors");
     private final ServerSocket rpiServer;
@@ -34,17 +33,20 @@ public class RpiServer implements Server, Runnable {
         this.rpiServer = new ServerSocket(port);
     }
 
+    @Override
     public void run() {
         showServerInfo(this.rpiServer);
 
         try {
-            Date date = new Date();
-            Socket clientSocket = listen(this.rpiServer);
-            String clientWhisper = getClientInitialRequest(clientSocket).toString();
-            AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
-                    " request = " + clientWhisper);
 
             while (true) {
+
+                Date date = new Date();
+                Socket clientSocket = listen(this.rpiServer);
+                String clientWhisper = getClientRequest(clientSocket).toString();
+                AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                        " request = " + clientWhisper);
+
                 switch (clientWhisper) {
                     case "weather" :
                         fetchWeatherRequest(clientSocket);
@@ -77,7 +79,6 @@ public class RpiServer implements Server, Runnable {
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
-                clientWhisper = getClientRequest(clientSocket).toString();
             }
         } catch (IOException e) {
             ERROR_LOGGER.log(Level.SEVERE, "couldn't receive client request", e.getMessage());
@@ -111,17 +112,6 @@ public class RpiServer implements Server, Runnable {
     @Override
     public Socket listen(ServerSocket rpiServer) throws IOException {
         return rpiServer.accept();
-    }
-
-    /**
-     * Raspberry Pi server, while listening, has received request from some client. Fetches client request.
-     *
-     * @param clientSocket {@link Socket} of client requesting communication with Rpi Server.
-     * @return String containing client request message.
-     * @throws IOException some error occurs.
-     */
-    public DataInputStream getClientInitialRequest(Socket clientSocket) throws IOException {
-        return new DataInputStream(clientSocket.getInputStream());
     }
 
     public DataInputStream getClientRequest(Socket clientSocket) throws IOException {

@@ -11,7 +11,7 @@ import java.net.Socket;
  *
  * @author Wali Morris<walimmorris@gmail.com>
  */
-public interface Server {
+public interface Server extends Runnable {
 
     void showServerInfo(ServerSocket rpiServer);
 
