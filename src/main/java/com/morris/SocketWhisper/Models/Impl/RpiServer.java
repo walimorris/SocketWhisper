@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,31 +44,38 @@ public class RpiServer implements Server, Runnable {
             AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                     " request = " + clientWhisper);
 
-            while ( true ) {
-
-                if ( isExitRequest(clientWhisper) ) {
-                    disconnectClient(clientSocket);
-                    AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
-                            "status: " + "disconnect=" + clientSocket.isClosed());
+            while (true) {
+                Map<String, Integer> clientOptions = getClientPromptMap();
+                int clientWhisperInt = 0;
+                for (String key : clientOptions.keySet()) {
+                    if (key.equals(clientWhisper)) {
+                        clientWhisperInt = clientOptions.get(key);
+                    }
                 }
-
-                if ( isWeatherRequest(clientWhisper) ) {
-                    fetchWeatherRequest(clientSocket);
-                    AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
-                            " request=WeatherRequest");
+                if (clientWhisperInt == 0) {
+                    clientWhisperInt = 5;
                 }
+                switch (clientWhisperInt) {
+                    case 1:
+                        fetchWeatherRequest(clientSocket);
+                        AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                                " request=WeatherRequest");
+                    case 2:
+                        fetchMarsPhotoRequest(clientSocket);
+                        AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                                " request=MarsPhotoRequest");
 
-                if ( isMarsPhotoRequest(clientWhisper) ) {
-                    fetchMarsPhotoRequest(clientSocket);
-                    AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
-                            " request=MarsPhotoRequest");
+                    case 3:
+                        JokesDB.connect();
+
+                    case 4:
+                        disconnectClient(clientSocket);
+                        AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
+                                "status: " + "disconnect=" + clientSocket.isClosed());
+
+                    case 5:
+                        disconnectClient(clientSocket); // implement receiving a int thats not an option
                 }
-
-                // test code
-                if ( clientWhisper.equals("jokes") ) {
-                    JokesDB.connect();
-                }
-
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
                 clientWhisper = getClientRequest(clientSocket).toString();
@@ -121,16 +130,6 @@ public class RpiServer implements Server, Runnable {
     }
 
     /**
-     * Validates if client sent a request to disconnect.
-     *
-     * @param message message from client.
-     * @return boolean
-     */
-    private boolean isExitRequest(String message) {
-        return message.equals("exit");
-    }
-
-    /**
      * Outputs message from client on RpiServer stdout side.
      *
      * @param message message received from client.
@@ -151,20 +150,6 @@ public class RpiServer implements Server, Runnable {
     public void sendClientWhisperEcho(Socket clientSocket, String message) throws IOException {
         DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
         out.writeUTF("Whisper heard: " + message);
-    }
-
-    /**
-     * Validates if message received from client is a weather request.
-     *
-     * @param message request from client.
-     * @return boolean
-     */
-    private boolean isWeatherRequest(String message) {
-        return message.equals("weather");
-    }
-
-    private boolean isMarsPhotoRequest(String message) {
-        return message.equals("mars-photos");
     }
 
     /**
@@ -197,5 +182,23 @@ public class RpiServer implements Server, Runnable {
         clientSocket.close();
         System.out.println(clientSocket.getInetAddress() + "disconnected!");
         this.run();
+    }
+
+    /**
+     * Private helper method used to build client prompt and parsing prompt choices
+     * in a {@link Map} object from int to it's String value. This conversion takes
+     * place so server can correctly read the clients option. If client chooses an
+     * option that isn't available, then server echos that this choice is not an
+     * option.
+     *
+     * @return A {@link Map} of propmt options.
+     */
+    private Map<String, Integer> getClientPromptMap() {
+        Map<String, Integer> options = new HashMap<>();
+        options.put("Weather Request", 1);
+        options.put("Mars Photos Request", 2);
+        options.put("Jokes Request", 3);
+        options.put("Exit Request", 4);
+        return options;
     }
 }

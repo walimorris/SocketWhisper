@@ -22,7 +22,7 @@ public interface Client extends Runnable {
 
     DataOutputStream buildClientToServerComm(Socket client) throws IOException;
 
-    String showClientPrompt(Scanner clientInput);
+    int showClientPrompt(Scanner clientInput);
 
     void shutDownClientConnection(Socket client) throws IOException;
 

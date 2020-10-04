@@ -4,6 +4,8 @@ import com.morris.SocketWhisper.Models.Client;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -27,12 +29,23 @@ public class ClientNode implements Client {
         try {
             DataOutputStream clientOut = buildClientToServerComm(this.client);
             DataInputStream serverIn = buildServerToClientComm(this.client);
-            String whisper = showClientPrompt(clientInput);
-            while (true) {
-                if (isExitRequest(whisper)) {
+            int whisper = showClientPrompt(clientInput);
+            while ( true ) {
+                switch( whisper ) {
+                    case 4:
                     shutDownClientConnection(this.client);
                 }
-                sendClientCommToServer(clientOut, whisper);
+                String whisperStr = null;
+                Map<Integer, String> options = getPromptMap();
+                for ( int key : options.keySet() ) {
+                    if (key == whisper) {
+                        whisperStr = options.get(key);
+                    }
+                }
+                if ( whisperStr == null ) {
+                    whisperStr = "chose a unavailable option!";
+                }
+                sendClientCommToServer(clientOut, whisperStr);
                 showServerResponse(serverIn);
                 whisper = showClientPrompt(clientInput);
             }
@@ -78,18 +91,25 @@ public class ClientNode implements Client {
      * @return String which is client input.
      */
     @Override
-    public String showClientPrompt(Scanner clientInput) {
+    public int showClientPrompt(Scanner clientInput) {
+        Map<Integer, String> options = getPromptMap();
+        StringBuilder prompt = new StringBuilder();
+        options.forEach((key, value) -> {
+            prompt.append(key.toString()).append(": ")
+                    .append(value)
+                    .append("\n");
+        });
+        System.out.println(prompt.toString());
         System.out.print("whisper: ");
-        return clientInput.nextLine();
+        return clientInput.nextInt();
     }
-
-    /**
-     * Determines if client sends message to request disconnection from the Raspberry Pi Server.
-     * @param whisper : client message.
-     * @return boolean
-     */
-    private boolean isExitRequest(String whisper) {
-        return whisper.equals("exit");
+    private Map<Integer, String> getPromptMap() {
+        Map<Integer, String> options = new HashMap<>();
+        options.put(1, "Weather Request");
+        options.put(2, "Mars Photos Request");
+        options.put(3, "Jokes Request");
+        options.put(4, "Exit Request");
+        return options;
     }
 
     /**
