@@ -10,5 +10,5 @@ import java.io.IOException;
  */
 public interface BasicRequest {
 
-    String getResponse() throws IOException;
+    String getResponse() throws IOException, InterruptedException;
 }

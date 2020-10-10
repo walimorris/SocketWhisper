@@ -1,6 +1,6 @@
 package com.morris.SocketWhisper.Models.Impl;
 
-import com.morris.SocketWhisper.Models.ApiRequests.MarPhotoRequest;
+import com.morris.SocketWhisper.Models.ApiRequests.MarsPhotoRequest;
 import com.morris.SocketWhisper.Models.Server;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 import com.morris.SocketWhisper.db.JokesDB;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * The RpiServer Class extends Thread as every client will run on its very own thread. The Rpi
  * can conduct different actions, gaining basic server-client communication abilities from the
- * {@link Server} interface. Other abilities{@link WeatherRequest} and {@link MarPhotoRequest}
+ * {@link Server} interface. Other abilities{@link WeatherRequest} and {@link MarsPhotoRequest}
  * come directly from the RpiServer class. The Rpi begins in a "listen" state, waiting for
  * client requests coming from a {@link ClientNode}. Once the RpiServer is satisfied,
  * communications can begin.
@@ -80,7 +80,7 @@ public class RpiServer implements Server {
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             ERROR_LOGGER.log(Level.SEVERE, "couldn't receive client request", e.getMessage());
         }
         this.run();
@@ -162,12 +162,9 @@ public class RpiServer implements Server {
         out2.writeUTF(weatherRequest.getResponse());
     }
 
-    public void fetchMarsPhotoRequest(Socket clientSocket) throws IOException {
+    public void fetchMarsPhotoRequest(Socket clientSocket) throws IOException, InterruptedException {
         DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-        out.writeUTF("[Whisper heard] type date in format YYYY-MM-DD: ");
-        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-        String message = in.readUTF();
-        MarPhotoRequest marsPhotoRequest = new MarPhotoRequest(message);
+        MarsPhotoRequest marsPhotoRequest = new MarsPhotoRequest();
         out.writeUTF(marsPhotoRequest.getResponse());
     }
 
