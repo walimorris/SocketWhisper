@@ -1,5 +1,6 @@
 package com.morris.SocketWhisper.Models.ApiRequests;
 
+import com.morris.SocketWhisper.Constants;
 import com.morris.SocketWhisper.Models.BasicRequest;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -29,7 +30,7 @@ public class WeatherRequest implements BasicRequest {
                         "link%252C%20accurate&units=imperial%252C%20metric&q=" + city)
                 .get()
                 .addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", apikey)
+                .addHeader("x-rapidapi-key", Constants.API)
                 .build();
 
         response = client.newCall(request).execute();
