@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" time="1.531" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" time="1.643" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.2+12-46"/>
@@ -55,6 +55,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.endian" value="little"/>
   </properties>
-  <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="WeatherRequestTest" time="0.774"/>
+  <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="WeatherRequestTest" time="0.886"/>
   <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="MarsPhotoRequestTest" time="0.757"/>
 </testsuite>

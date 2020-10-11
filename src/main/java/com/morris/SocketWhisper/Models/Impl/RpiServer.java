@@ -163,7 +163,7 @@ public class RpiServer implements Server {
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
         String city = in.readUTF();
         WeatherRequest weatherRequest = new WeatherRequest(city);
-        out2.writeUTF(weatherRequest.getResponse());
+        out.writeUTF(weatherRequest.getResponse());
     }
 
     public void fetchMarsPhotoRequest(Socket clientSocket) throws IOException, InterruptedException {
