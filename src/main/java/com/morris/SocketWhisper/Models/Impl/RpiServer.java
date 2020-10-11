@@ -162,11 +162,7 @@ public class RpiServer implements Server {
         out.writeUTF("[Whisper heard] which city: ");
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
         String city = in.readUTF();
-        DataOutputStream out2 = new DataOutputStream(clientSocket.getOutputStream());
-        out2.writeUTF("[Whisper heard] enter api key: ");
-        DataInputStream in2 = new DataInputStream(clientSocket.getInputStream());
-        String apiKey = in2.readUTF();
-        WeatherRequest weatherRequest = new WeatherRequest(city, apiKey);
+        WeatherRequest weatherRequest = new WeatherRequest(city);
         out2.writeUTF(weatherRequest.getResponse());
     }
 

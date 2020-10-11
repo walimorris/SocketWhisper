@@ -41,7 +41,7 @@ public class ApiRequestsTest {
      */
     @Test
     public void WeatherRequestTest() throws IOException {
-        WeatherRequest weatherRequestTest = new WeatherRequest("seattle", Constants.API);
+        WeatherRequest weatherRequestTest = new WeatherRequest("seattle");
         String body = weatherRequestTest.getResponse();
         System.out.println(body);
         Assert.assertNotNull(body);
