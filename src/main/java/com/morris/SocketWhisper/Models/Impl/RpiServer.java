@@ -102,6 +102,14 @@ public class RpiServer implements Server {
     }
 
     /**
+     * Test the RpiServer for operation.
+     * @return boolean
+     */
+    public boolean isDown() {
+        return this.rpiServer.isClosed();
+    }
+
+    /**
      * Raspberry Pi server should listen for any client who requests to connect over the local network. Once Rpi
      * server is satisfied, the Rpi {@link ServerSocket} will bind to client {@link Socket} and receive client's
      * message. Communication has officially begun once Rpi Server has accepted and binds sockets for communication.
