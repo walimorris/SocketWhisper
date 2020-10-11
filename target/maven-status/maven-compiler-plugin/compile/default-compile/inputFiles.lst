@@ -1,9 +1,10 @@
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/Client.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/Impl/ClientNode.java
-/home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/ApiRequests/MarPhotoRequest.java
+/home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/ApiRequests/MarsPhotoRequest.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/db/JokesDB.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/Impl/RpiServer.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/ApiRequests/WeatherRequest.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Main.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/Server.java
 /home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Models/BasicRequest.java
+/home/tuvok/IdeaProjects/SocketWhisper/src/main/java/com/morris/SocketWhisper/Constants.java

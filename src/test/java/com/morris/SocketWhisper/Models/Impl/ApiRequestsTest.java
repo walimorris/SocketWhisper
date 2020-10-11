@@ -7,46 +7,16 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * It's important to test the working elements of the RpiServer and ClientNodes that connect to it.
  * Ensuring that processes are started, ended, properly built and exited are critical to ensuring
  * the function of the RpiServer and ClientNodes. Here contains a series of tests to ensure that
- * API requests, executors, and critical functions work properly.
+ * API requests are properly handled and executed.
  *
  * @author Wali Morris<walimmorris@gmail.com>
  */
-public class RpiServerTest {
-
-    @Test
-    public void RpiServerExecutionTest() throws IOException {
-        RpiServer rpiServer = new RpiServer(6066);
-        rpiServer.run();
-
-        /* A RpiServer has been instantiated and run, RpiServer class has a method called
-         * isDown() which returns true if RpiServer is closed and false otherwise. This
-         * test utilizes this method to ensure the raspberrypi is up and running.
-         */
-        Assert.assertFalse(rpiServer.isDown());
-    }
-
-    /**
-     * Each client is run on its own thread using the {@link ExecutorService}.
-     * This tests ensures that the thread is powered by the executor, then it's
-     * shutdown and tested to ensure that the thread is powered down.
-     * @throws IOException
-     */
-    @Test
-    public void clientNodeExecutorThreadTest() throws IOException {
-        ExecutorService ex = Executors.newSingleThreadExecutor();
-        ClientNode client = new ClientNode();
-        ex.execute(client);
-        Assert.assertFalse(ex.isShutdown());
-        ex.shutdown();
-        Assert.assertTrue(ex.isShutdown());
-    }
+public class ApiRequestsTest {
 
     /**
      * A Test to ensure that the MarsPhotoRequest Api is up and working. The MarsPhotoRequest
@@ -58,6 +28,7 @@ public class RpiServerTest {
     public void MarsPhotoRequestTest() throws InterruptedException {
         MarsPhotoRequest marsRequestTest = new MarsPhotoRequest();
         String body = marsRequestTest.getResponse();
+        System.out.println(body);
         Assert.assertNotNull(body);
     }
 
@@ -72,6 +43,7 @@ public class RpiServerTest {
     public void WeatherRequestTest() throws IOException {
         WeatherRequest weatherRequestTest = new WeatherRequest("seattle", Constants.API);
         String body = weatherRequestTest.getResponse();
+        System.out.println(body);
         Assert.assertNotNull(body);
     }
 }

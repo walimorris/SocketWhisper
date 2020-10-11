@@ -182,4 +182,14 @@ public class RpiServer implements Server {
         System.out.println(clientSocket.getInetAddress() + "disconnected!");
         this.run();
     }
+
+    public void shutdown() {
+        try {
+            rpiServer.close();
+        } catch(IOException e) {
+            ERROR_LOGGER.log(Level.SEVERE, "error closing rpi server", e.getMessage());
+            System.out.println("error closing rpi server...force closing!");
+            System.exit(1);
+        }
+    }
 }
