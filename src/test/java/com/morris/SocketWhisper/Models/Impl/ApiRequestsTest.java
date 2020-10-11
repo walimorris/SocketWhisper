@@ -28,7 +28,7 @@ public class ApiRequestsTest {
     public void MarsPhotoRequestTest() throws InterruptedException {
         MarsPhotoRequest marsRequestTest = new MarsPhotoRequest();
         String body = marsRequestTest.getResponse();
-        System.out.println(body);
+
         Assert.assertNotNull(body);
     }
 
@@ -45,5 +45,11 @@ public class ApiRequestsTest {
         String body = weatherRequestTest.getResponse();
         System.out.println(body);
         Assert.assertNotNull(body);
+
+        /* If api key is incorrect, weather api sends a short message. This test ensures that although
+         * response is not null, also that it is not just a short error message but rather the weather
+         * information.
+         */
+        Assert.assertTrue(body.length() > 150);
     }
 }
