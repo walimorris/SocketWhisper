@@ -1,7 +1,6 @@
 package com.morris.SocketWhisper.Models.ApiRequests;
 
 import com.morris.SocketWhisper.Constants;
-import com.squareup.okhttp.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.net.URI;
