@@ -1,4 +1,4 @@
-Welcome to the SocketWhisper. The SocketWhisper is a simple program that uses a Raspberry pi to act as 
-a server in a server-client relationship. Any PC connected to the network can act as client. With the 
-SocketWhisper you can do many things; send messages throughout the network, update a repository holding 
-data, send/receive information throughout the web and more. Detailed instruction coming soon... stand by...
+Welcome to the SocketWhisper. SocketWhisper is software written for fun and experimentation to find out the 
+capabilities of Raspberry Pi and Java programming language. The SocketWhisper uses a Raspberry pi to act as 
+a server in a server-client relationship model. Ideally clients should be personal PCs, although there are 
+plans to utilize small Android phones that can act as both server and client in the future. 
