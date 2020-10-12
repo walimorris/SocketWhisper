@@ -1,6 +1,5 @@
 package com.morris.SocketWhisper.Models.Impl;
 
-import com.morris.SocketWhisper.Constants;
 import com.morris.SocketWhisper.Models.ApiRequests.MarsPhotoRequest;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 import org.junit.Assert;
@@ -25,10 +24,12 @@ public class ApiRequestsTest {
      * @throws InterruptedException
      */
     @Test
-    public void MarsPhotoRequestTest() throws InterruptedException {
+    public void MarsPhotoRequestTest() {
         MarsPhotoRequest marsRequestTest = new MarsPhotoRequest();
         String body = marsRequestTest.getResponse();
 
+        /* print body in response, for now, to view formatted response. */
+        System.out.println(body);
         Assert.assertNotNull(body);
     }
 
@@ -43,6 +44,8 @@ public class ApiRequestsTest {
     public void WeatherRequestTest() throws IOException {
         WeatherRequest weatherRequestTest = new WeatherRequest("seattle");
         String body = weatherRequestTest.getResponse();
+
+        /* Print body of response, for now, to view formatted body of response. */
         System.out.println(body);
         Assert.assertNotNull(body);
 
