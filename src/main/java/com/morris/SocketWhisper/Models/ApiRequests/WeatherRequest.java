@@ -10,8 +10,9 @@ import java.net.http.HttpResponse;
 
 /**
  * Weather request utilizes the Open Weather Map api to request detailed weather information
- * about a certain city through HTTP Request {@link OkHttpClient}. It is best to give the full
- * name of the city, Weather Map Api returns better results.
+ * about a certain city through HTTP Request {@link HttpRequest}. {@link HttpResponse} and
+ * {@link HttpClient}. It is best to give the full name me of the city, Weather Map Api returns
+ * better results.
  *
  * @author Wali Morris<walimmorris@gmail.com>
  */
