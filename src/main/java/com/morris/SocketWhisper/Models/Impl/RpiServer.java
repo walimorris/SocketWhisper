@@ -7,6 +7,7 @@ import com.morris.SocketWhisper.db.JokesDB;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -74,16 +75,16 @@ public class RpiServer implements Server {
                         break;
 
                     case "default" :
-                        disconnectClient(clientSocket); // implement receiving a int thats not an option
+                        disconnectClient(clientSocket); // implement receiving a int that's not an option
                         break;
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e ) {
             ERROR_LOGGER.log(Level.SEVERE, "couldn't receive client request", e.getMessage());
+            this.run();
         }
-        this.run();
     }
 
     /**

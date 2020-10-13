@@ -30,7 +30,6 @@ public class Main {
                 System.out.println("Error occurred closing client, restarting server...");
                 startRpiServer(input);
             }
-
         } else {
             startClient();
         }
