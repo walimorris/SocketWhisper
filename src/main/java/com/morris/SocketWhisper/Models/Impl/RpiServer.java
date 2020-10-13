@@ -7,7 +7,6 @@ import com.morris.SocketWhisper.db.JokesDB;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -43,7 +42,6 @@ public class RpiServer implements Server {
             while (true) {
 
                 Date date = new Date();
-                boolean exitCase = false;
                 Socket clientSocket = listen(this.rpiServer);
                 String clientWhisper = getClientRequest(clientSocket).toString();
                 AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
@@ -126,13 +124,6 @@ public class RpiServer implements Server {
     }
 
     public DataInputStream getClientRequest(Socket clientSocket) throws IOException {
-        try {
-            return new DataInputStream(clientSocket.getInputStream());
-        } catch (EOFException e) {
-            ERROR_LOGGER.log(Level.SEVERE, "error receiving client message, client must have quit.");
-            System.out.println("Restarting Server...");
-            this.run();
-        }
         return new DataInputStream(clientSocket.getInputStream());
     }
 
@@ -185,7 +176,6 @@ public class RpiServer implements Server {
         System.out.println("client at : " + clientSocket.getInetAddress() + "requesting disconnect");
         clientSocket.close();
         System.out.println(clientSocket.getInetAddress() + "disconnected!");
-        this.run();
     }
 
     public void shutdown() {
