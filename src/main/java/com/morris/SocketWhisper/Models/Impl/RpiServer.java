@@ -125,6 +125,13 @@ public class RpiServer implements Server {
     }
 
     public DataInputStream getClientRequest(Socket clientSocket) throws IOException {
+        try {
+            return new DataInputStream(clientSocket.getInputStream());
+        } catch (EOFException e) {
+            ERROR_LOGGER.log(Level.SEVERE, "error receiving client message, client must have quit.");
+            System.out.println("Restarting Server...");
+            this.run();
+        }
         return new DataInputStream(clientSocket.getInputStream());
     }
 
@@ -177,7 +184,6 @@ public class RpiServer implements Server {
         System.out.println("client at : " + clientSocket.getInetAddress() + "requesting disconnect");
         clientSocket.close();
         System.out.println(clientSocket.getInetAddress() + "disconnected!");
-        this.run();
     }
 
     public void shutdown() {
