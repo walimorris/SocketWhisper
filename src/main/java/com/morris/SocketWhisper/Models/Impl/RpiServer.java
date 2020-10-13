@@ -73,12 +73,11 @@ public class RpiServer implements Server {
                         disconnectClient(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 "status: " + "disconnect=" + clientSocket.isClosed());
-                        exitCase = true;
-                        break;
+                        continue;
 
                     case "default" :
                         disconnectClient(clientSocket); // implement receiving a int that's not an option
-                        continue;
+                        break;
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
