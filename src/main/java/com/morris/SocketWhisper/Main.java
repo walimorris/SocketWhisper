@@ -3,12 +3,18 @@ package com.morris.SocketWhisper;
 import com.morris.SocketWhisper.Models.Impl.ClientNode;
 import com.morris.SocketWhisper.Models.Impl.RpiServer;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+        final Logger ERROR_LOGGER = Logger.getLogger("errors");
+
         /* Creates Scanner object for user input */
         Scanner input = new Scanner(System.in);
 
@@ -17,7 +23,14 @@ public class Main {
 
         /* user choose server, attempt to start Rpi Server */
         if ( nodeType.equals("s") || nodeType.equals("s".toUpperCase()) ) {
-            startRpiServer(input);
+            try {
+                startRpiServer(input);
+            } catch (EOFException e) {
+                ERROR_LOGGER.log(Level.SEVERE, "error occurred closing client");
+                System.out.println("Error occurred closing client, restarting server...");
+                startRpiServer(input);
+            }
+
         } else {
             startClient();
         }
