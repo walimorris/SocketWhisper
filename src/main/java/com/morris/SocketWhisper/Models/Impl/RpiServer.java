@@ -78,10 +78,7 @@ public class RpiServer implements Server {
 
                     case "default" :
                         disconnectClient(clientSocket); // implement receiving a int that's not an option
-                        break;
-                }
-                if (exitCase) {
-                    continue;
+                        continue;
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);

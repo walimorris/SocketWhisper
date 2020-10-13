@@ -115,7 +115,6 @@ public class ClientNode implements Client {
     @Override
     public void shutDownClientConnection() {
         System.out.println("Client shutting down, thanks for using SocketWhisper. Goodbye!");
-        System.exit(0);
     }
 
     /**
