@@ -24,7 +24,7 @@ public interface Client extends Runnable {
 
     String showClientPrompt(Scanner clientInput);
 
-    void shutDownClientConnection(Socket client) throws IOException;
+    void shutDownClientConnection();
 
     void sendClientCommToServer(DataOutputStream clientOut, String whisper) throws IOException;
 

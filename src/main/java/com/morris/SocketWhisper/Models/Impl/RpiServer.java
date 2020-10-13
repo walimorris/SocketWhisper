@@ -184,6 +184,7 @@ public class RpiServer implements Server {
         System.out.println("client at : " + clientSocket.getInetAddress() + "requesting disconnect");
         clientSocket.close();
         System.out.println(clientSocket.getInetAddress() + "disconnected!");
+        this.run();
     }
 
     public void shutdown() {

@@ -36,7 +36,7 @@ public class ClientNode implements Client {
 
                 switch( whisper ) {
                     case "4":
-                    shutDownClientConnection(this.client);
+                    shutDownClientConnection();
                     break;
                 }
                 String whisperStr = null;
@@ -53,11 +53,6 @@ public class ClientNode implements Client {
             }
         } catch (IOException e) {
             System.out.println("Server Interrupted!");
-            try {
-                shutDownClientConnection(this.client);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
         }
     }
 
@@ -114,13 +109,11 @@ public class ClientNode implements Client {
     }
 
     /**
-     * Shuts down client communication to Raspberry PiServer by disconnecting {@link Socket}.
-     * @param client the client to disconnect from Rpi.
-     * @throws IOException some error occurs.
+     * Shuts down client communication to Raspberry PiServer by shutting down program and
+     * handling client socket closure on server side.
      */
     @Override
-    public void shutDownClientConnection(Socket client) throws IOException {
-        client.close();
+    public void shutDownClientConnection() {
         System.out.println("Client shutting down, thanks for using SocketWhisper. Goodbye!");
         System.exit(0);
     }
