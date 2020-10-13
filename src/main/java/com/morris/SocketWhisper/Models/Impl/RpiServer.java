@@ -43,6 +43,7 @@ public class RpiServer implements Server {
             while (true) {
 
                 Date date = new Date();
+                boolean exitCase = false;
                 Socket clientSocket = listen(this.rpiServer);
                 String clientWhisper = getClientRequest(clientSocket).toString();
                 AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
@@ -72,11 +73,15 @@ public class RpiServer implements Server {
                         disconnectClient(clientSocket);
                         AUDIT_LOGGER.info(date + " " + "request from: " + clientSocket.getInetAddress() +
                                 "status: " + "disconnect=" + clientSocket.isClosed());
+                        exitCase = true;
                         break;
 
                     case "default" :
                         disconnectClient(clientSocket); // implement receiving a int that's not an option
                         break;
+                }
+                if (exitCase) {
+                    continue;
                 }
                 showClientMessage(clientWhisper);
                 sendClientWhisperEcho(clientSocket, clientWhisper);
