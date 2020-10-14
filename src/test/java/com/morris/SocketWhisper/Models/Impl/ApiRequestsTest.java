@@ -4,6 +4,7 @@ import com.morris.SocketWhisper.Models.ApiRequests.MarsPhotoRequest;
 import com.morris.SocketWhisper.Models.ApiRequests.WeatherRequest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
  *
  * @author Wali Morris<walimmorris@gmail.com>
  */
+@DisplayName("Api Requests Test Cases")
 public class ApiRequestsTest {
 
     /**
@@ -24,6 +26,7 @@ public class ApiRequestsTest {
      * @throws InterruptedException
      */
     @Test
+    @DisplayName("MarsPhotoRequest Test")
     public void MarsPhotoRequestTest() {
         MarsPhotoRequest marsRequestTest = new MarsPhotoRequest();
         String body = marsRequestTest.getResponse();
@@ -41,6 +44,7 @@ public class ApiRequestsTest {
      * @throws IOException
      */
     @Test
+    @DisplayName("WeatherRequest Test")
     public void WeatherRequestTest() throws IOException {
         WeatherRequest weatherRequestTest = new WeatherRequest("seattle");
         String body = weatherRequestTest.getResponse();
