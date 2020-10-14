@@ -61,10 +61,7 @@ public class RpiServer implements Server {
                         break;
 
                     case "jokes" :
-                        JokesDB.connect();
-                        String conn = "connected to JokesDB";
-                        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                        out.writeUTF(conn);
+                        String jokes = fetchJokesDB();
                         break;
 
                     case "exit":
@@ -170,6 +167,12 @@ public class RpiServer implements Server {
         DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
         MarsPhotoRequest marsPhotoRequest = new MarsPhotoRequest();
         out.writeUTF(marsPhotoRequest.getResponse());
+    }
+
+    public String fetchJokesDB() {
+        JokesDB jokesDB = new JokesDB();
+        jokesDB.connect();
+        return jokesDB.getJokes();
     }
 
     public void disconnectClient(Socket clientSocket) throws IOException {

@@ -1,16 +1,17 @@
 package com.morris.SocketWhisper.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class JokesDB {
-    public static void connect() {
+    private String jokes;
+
+    public void connect() {
         Connection conn = null;
         try {
             String url = "jdbc:sqlite/home/pi/jokes.db";
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to Jokes Database has been established");
+            this.jokes = readAllFromLightJokes(conn);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -22,5 +23,19 @@ public class JokesDB {
                 System.out.println(ex.getMessage());
             }
         }
+    }
+
+    private String readAllFromLightJokes(Connection connection) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM lightjokes");
+            return resultSet.toString();
+        } catch (SQLException e) {
+            return "Some error occurred reading sql-result";
+        }
+    }
+
+    public String getJokes() {
+        return this.jokes;
     }
 }
