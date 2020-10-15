@@ -21,15 +21,15 @@ Let's go through the server/client model and quickly understand how SocketWhispe
    clients. In the case of SocketWhisper, our server is powered by software written 
    in Java running on a Raspberry Pi. We'll get to how this is accomplished soon, 
    after we run through the role of a client. Think about servers running games like
-   Minecraft, now scale down. A whole lot. The Raspberry Pi as a server has a major 
+   Minecraft, now scale down. A lot. The Raspberry Pi as a server has a major 
    function: to listen for clients, on a dedicated port, requesting to use its services 
    and resources. Thanks to the creators and many contributors of Java, we have classes
-   that we can tell to do these things. In Java we can create a ServerSocket object and
+   that we can tell to do these things. In Java, we can create a ServerSocket object and
    use its listen() function to block until it receives a request from a client. The 
    ServerSocket class also provides methods to timeout a server if it hasn't received
-   any request in some amount of time, and much more. Java takes care of a lot once 
+   any request in some amount of time, and much more. Java takes care of a-lot once 
    the ServerSocket has received a request from a client; fully vetting a client before
-   it is granted access to the Raspberry Pi resources. Once this connection is created
+   it is granted access to the Raspberry Pi resources. Once the connection is created
    communication can begin, almost. Next we'll go over the role of client. Last remarks, 
    Java does include security measures such as availability to implement secure network 
    communication via encryption. Other security measures include SocketPermission class
@@ -38,5 +38,18 @@ Let's go through the server/client model and quickly understand how SocketWhispe
    goal is to implement secure features. 
    
 2. #####<u>Client - Node</u> : 
-
+   The ClientNode, much like the Raspberry Pi Server, implements many of the same low-level 
+   methods from java.net. A client is, essentially, anything such as another computer or 
+   program that requests access to resources. In these beginning stages you can consider a 
+   PC loaded with SocketWhisper to be client. Here's what you should know: A client node 
+   utilizes a Socket supplied by java.net. This Socket must know two things to communicate 
+   and grab resources from a server. First, the Host Name of server (it's ip address). 
+   Second, which port the server is listening on. Once these building blocks are in place, the 
+   last thing to do is request something from the server. Currently, clients connected to 
+   Raspberry Pi server will be supplied a prompt which allows a client to choose from a list
+   of actions to take. Some options are: random jokes, weather requests, NASA photos and an 
+   echo playback where server repeats client. As SocketWhisper grows, so will client and server
+   interaction. 
+   
+3. #####<u>Server-Client Model</u> : 
    

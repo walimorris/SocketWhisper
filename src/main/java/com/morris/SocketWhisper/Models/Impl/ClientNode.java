@@ -99,7 +99,12 @@ public class ClientNode implements Client {
         System.out.print("whisper: ");
         return clientInput.nextLine();
     }
-    private Map<String, String> getPromptMap() {
+
+    /**
+     * Helper method to build the client prompt from {@link HashMap}.
+     * @return Map containing different user options.
+     */
+    public Map<String, String> getPromptMap() {
         Map<String, String> options = new HashMap<>();
         options.put("1", "weather");
         options.put("2", "mars");
