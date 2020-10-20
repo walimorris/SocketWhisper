@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" time="1.762" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" time="4.39" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.2+12-46"/>
@@ -30,7 +30,7 @@
     <property name="java.class.version" value="58.0"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="5.4.0-48-generic"/>
+    <property name="os.version" value="5.4.0-51-generic"/>
     <property name="library.jansi.path" value="/usr/share/maven/lib/jansi-native"/>
     <property name="user.home" value="/home/tuvok"/>
     <property name="user.timezone" value="America/Los_Angeles"/>
@@ -40,7 +40,7 @@
     <property name="java.class.path" value="/usr/share/maven/boot/plexus-classworlds-2.x.jar"/>
     <property name="java.vm.specification.version" value="14"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test"/>
     <property name="java.home" value="/usr/lib/jvm/java-14-oracle"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -55,6 +55,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.endian" value="little"/>
   </properties>
-  <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="WeatherRequestTest" time="1.029"/>
-  <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="MarsPhotoRequestTest" time="0.733"/>
+  <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="WeatherRequestTest" time="2.581"/>
+  <testcase classname="com.morris.SocketWhisper.Models.Impl.ApiRequestsTest" name="MarsPhotoRequestTest" time="1.809"/>
 </testsuite>
