@@ -1,5 +1,6 @@
 package com.morris.SocketWhisper.Models.Impl;
 
+import com.morris.SocketWhisper.Constants;
 import com.morris.SocketWhisper.Models.Client;
 
 import java.io.*;
@@ -18,8 +19,8 @@ public class ClientNode implements Client {
     private final Socket client;
 
     public ClientNode() throws IOException {
-        String serverName = "10.0.0.18";
-        int serverPort = 6066;
+        String serverName = Constants.HOST;
+        int serverPort = Constants.PORT;
         this.client = new Socket(serverName, serverPort);
     }
 
