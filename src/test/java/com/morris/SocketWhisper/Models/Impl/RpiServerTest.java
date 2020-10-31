@@ -43,6 +43,14 @@ public class RpiServerTest {
         Assert.assertEquals(rpiServer.getLocalPort(), 6066);
     }
 
+    /**
+     * Test Case to administer validation of server status, that is to check if the server
+     * is closed or is not closed. Initializes RpiServer and checks if it is down(assert that
+     * this is false), close RpiServer and check if it is down(assert that this is true).
+     *
+     * @author Wali Morris<walimmorris@gmail.com>
+     * @throws IOException : Some error occurs initializing RpiServer
+     */
     @Test
     @DisplayName("Testing to Validate Raspberry Pi status(closed or open)")
     public void IsDownTest() throws IOException {
