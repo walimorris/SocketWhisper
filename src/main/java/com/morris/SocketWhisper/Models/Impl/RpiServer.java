@@ -102,6 +102,7 @@ public class RpiServer implements Server {
      * Test the RpiServer for operation.
      * @return boolean
      */
+    @Override
     public boolean isDown()  {
         return this.rpiServer.isClosed();
     }

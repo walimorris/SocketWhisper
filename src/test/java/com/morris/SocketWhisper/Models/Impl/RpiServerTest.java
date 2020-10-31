@@ -42,4 +42,13 @@ public class RpiServerTest {
         Assert.assertNotNull(rpiServer.getLocalSocketAddress());
         Assert.assertEquals(rpiServer.getLocalPort(), 6066);
     }
+
+    @Test
+    @DisplayName("Testing to Validate Raspberry Pi status(closed or open)")
+    public void IsDownTest() throws IOException {
+        ServerSocket rpiServer = new ServerSocket(Constants.PORT);
+        Assert.assertFalse(rpiServer.isClosed());
+        rpiServer.close();
+        Assert.assertTrue(rpiServer.isClosed());
+    }
 }

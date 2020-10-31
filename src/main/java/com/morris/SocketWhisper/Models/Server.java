@@ -24,5 +24,6 @@ public interface Server extends Runnable {
     void sendClientWhisperEcho(Socket clientSocket, String message) throws IOException;
 
     void disconnectClient(Socket clientSocket) throws IOException;
+    boolean isDown();
 
 }
