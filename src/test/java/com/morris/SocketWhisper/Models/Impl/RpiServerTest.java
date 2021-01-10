@@ -34,9 +34,6 @@ public class RpiServerTest {
         String localIP = rpiServer.getLocalSocketAddress().toString();
         String hostName = rpiServer.getInetAddress().getHostName();
         String localSocketAddress = rpiServer.getLocalSocketAddress().toString();
-        System.out.println("Test: Local IP Address = " +  localIP);
-        System.out.println("Test: Local Host Name = " + hostName);
-        System.out.println("Test: Local Socket Address = " + localSocketAddress);
         Assert.assertNotNull(localIP);
         Assert.assertNotNull(hostName);
         Assert.assertNotNull(rpiServer.getLocalSocketAddress());
